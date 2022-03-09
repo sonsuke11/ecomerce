@@ -1,0 +1,14 @@
+@import "../../../sass/_variables";
+.navbar__fluid {
+  background-color: $primary;
+  & .navbar__containter {
+    max-width: 120rem;
+    margin: 0 auto;
+    color: $white;
+    display: flex;
+    & .navbar__item {
+      padding: 2rem 2.8rem;
+      cursor: pointer;
+    }
+  }
+}
