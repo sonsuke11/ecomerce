@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer")
 const sendMail = function ({ from, to, subject, html }) {
   const mailOptions = {
     from,

@@ -1,0 +1,29 @@
+.header__wrapper {
+  height: 10rem;
+  & .header__block {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 0 auto;
+    max-width: 120rem;
+    & .header__logo--link {
+      width: 25rem;
+      display: block;
+      margin-right: 5rem;
+    }
+    & .header__search--area {
+      width: 100%;
+      position: relative;
+      & .button__input {
+        position: absolute;
+        top: 0.2rem;
+        right: 0.2rem;
+      }
+    }
+    & .header__action {
+      margin-left: 1rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@import "../../../sass/variables";
+.footer__fluid {
+  background-color: $primary;
+  & .footer__rules--block {
+    max-width: 120rem;
+    color: $white;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    & .footer__rules--item {
+      padding: 3rem 0;
+      &:not(:last-child) {
+        border-right: 1px solid $border-gray;
+      }
+      & .footer__rules--icon {
+        width: 3.2rem;
+        display: block;
+        margin: 0 auto;
+      }
+      & .footer__rules--heading {
+        font-weight: bold;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      & .footer__rules--content {
+        font-size: 1.3rem;
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+}

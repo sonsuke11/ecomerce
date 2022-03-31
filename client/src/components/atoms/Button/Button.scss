@@ -1,0 +1,18 @@
+@import "../../../sass/variables";
+.button__group {
+  display: flex;
+  align-items: center;
+  min-width: 10rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  & i {
+    display: block;
+    margin-right: 0.5rem;
+    border: 2px solid $primary;
+    padding: 0.6rem;
+    border-radius: 50%;
+    font-size: 1.6rem;
+  }
+}
