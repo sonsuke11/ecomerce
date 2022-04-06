@@ -12,6 +12,9 @@ const Products = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1646830663355-0e38627e2106?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
       description: "loremp",
+      price: 20000,
+      sold: 120000,
+      rank: 4,
     },
     {
       name: "albany sectional",
@@ -19,6 +22,9 @@ const Products = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1646830663355-0e38627e2106?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
       description: "lorempdsvdva",
+      price: 20000,
+      sold: 120000,
+      rank: 0,
     },
     {
       name: "albanyđâfdsa sectional",
@@ -26,6 +32,9 @@ const Products = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1646830663355-0e38627e2106?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
       description: "lorempdsvdva  vadfsafa",
+      price: 20000,
+      sold: 120000,
+      rank: 0,
     },
     {
       name: "albany sectional",
@@ -33,6 +42,9 @@ const Products = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1646830663355-0e38627e2106?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
       description: "lorempdsvdva",
+      price: 20000,
+      sold: 120000,
+      rank: 0,
     },
     {
       name: "albany sectional",
@@ -40,6 +52,9 @@ const Products = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1646830663355-0e38627e2106?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
       description: "lorempdsvdva",
+      price: 20000,
+      sold: 120000,
+      rank: 0,
     },
     {
       name: "jkfdnskfnda sectional",
@@ -47,6 +62,9 @@ const Products = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1646830663355-0e38627e2106?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
       description: "lorempdsvdva",
+      price: 20000,
+      sold: 120000,
+      rank: 3,
     },
     {
       name: "12213 sectional",
@@ -54,6 +72,9 @@ const Products = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1646830663355-0e38627e2106?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
       description: "lorempdsvdva",
+      price: 20000,
+      sold: 120000,
+      rank: 5,
     },
     {
       name: "phone 12",
@@ -61,12 +82,15 @@ const Products = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1646830663355-0e38627e2106?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
       description: "lorempdsvdva adsfs adsaf",
+      price: 20000,
+      sold: 120000,
+      rank: 2,
     },
   ]
 
   return (
     <Layout>
-      <div className="container__product">
+      <div className="grid wide">
         <div className="row">
           {products.map((product) => (
             <CartProduct product={product} />
