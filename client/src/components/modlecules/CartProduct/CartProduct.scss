@@ -1,6 +1,38 @@
-.cart__wrap {
+@import "../../../sass/mixin";
+.margin__cart{
+  margin-top: 24px;
 }
-.product__image {
+.cart__wrap {
+  border-radius: 1.2rem;
+  background-color: #fff;
   overflow: hidden;
-  padding-top: 26rem;
+  @include box-shadow;
+  & .product__image {
+    overflow: hidden;
+    padding-top: 26rem;
+  }
+  & .product__info {
+    padding: 2rem 1.5rem;
+    & .product__name {
+      font-weight: 300;
+    }
+    & .mb-10 {
+      margin-bottom: 1rem;
+    }
+    & .product__price {
+      font-weight: 600;
+    }
+    & .product__evaluate {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      & .product__icon {
+        width: 1.5rem;
+      }
+      & .product__icon--rank {
+        margin-right: 0.3rem;
+        width: 1.5rem;
+      }
+    }
+  }
 }

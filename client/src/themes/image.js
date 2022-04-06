@@ -9,7 +9,13 @@ const icPhoneFooter = `${PATH_IMG}ic_phone_footer.png`
 const icReturn = `${PATH_IMG}ic_return.png`
 const icSystemStore = `${PATH_IMG}ic_system_store.png`
 const icTransformer = `${PATH_IMG}ic_transformer.png`
+const icHeartFill = `${PATH_IMG}ic_heart_fill.png`
+const icHeart = `${PATH_IMG}ic_heart.png`
+const icStar = `${PATH_IMG}ic_star.png`
+const icStarFill = `${PATH_IMG}ic_star_fill.png`
 const images = {
+  icHeartFill,
+  icHeart,
   logo,
   icSeach,
   icCartShopping,
@@ -19,5 +25,7 @@ const images = {
   icReturn,
   icTransformer,
   icSystemStore,
+  icStarFill,
+  icStar,
 }
 export default images

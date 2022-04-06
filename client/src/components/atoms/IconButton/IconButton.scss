@@ -1,9 +1,8 @@
 @import "../../../sass/base.scss";
 
 .icon__button--img {
-  padding: 1rem;
-  width: 4rem;
-  height: 4rem;
-  object-fit: contain;
-  cursor: pointer;
+    & img{
+        width:100%;
+    }
 }
+
