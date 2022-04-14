@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 import images from "../../../themes/image"
+import Badge from "../../atoms/Badge/Badge"
 import Button from "../../atoms/Button/Button"
 import IconButton from "../../atoms/IconButton/IconButton"
 import Input from "../../atoms/Input/Input"
@@ -19,18 +20,21 @@ const Header = () => {
           <IconButton className="button__input" icon={images.icSeach} />
         </div>
         <div className="header__action">
-          <Button>
-            <i className="fa-solid fa-phone"></i>
-            0393230064
-          </Button>
-          <Button>
+          <Link to="/products">
+            <Button variant="cicle">
+              <i className="fa-solid fa-phone"></i>
+              0393230064
+            </Button>
+          </Link>
+          <Button variant="cicle">
             <i className="fa-solid fa-user"></i>
             Login/Register
           </Button>
-          <Button>
-            <i className="fa-solid fa-cart-shopping"></i>
-            Cart
-          </Button>
+          <Badge>
+            <Button variant="cicle">
+              <i className="fa-solid fa-cart-shopping"></i>
+            </Button>
+          </Badge>
         </div>
       </div>
     </header>

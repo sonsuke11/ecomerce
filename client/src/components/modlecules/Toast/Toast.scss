@@ -1,0 +1,38 @@
+.toast__wrap{
+    position:fixed;
+    top: 0;
+    right:0;
+    text-align: center;
+    color: #fff;
+    width:32rem;
+    background-color: transparent;
+    & .toast__item{
+        animation-duration:0.3s;
+        animation-name: toast;
+        position: relative;
+        width: 300px;
+        padding: 2rem;
+        font-size: 1.3rem;
+        background-color: black;
+        & .toast__close{
+            outline: none;
+            background-color: transparent;
+            border:none;
+            position: absolute;
+            top:0;
+            color: white;
+            right:0;
+        }
+    }
+}
+@keyframes toast {
+   0% {
+       transform: translateX(100%);
+   }
+   95%{
+       transform: translateX(-1.5rem)
+   }
+   100%{
+       transform: translateX(1rem)
+   }
+}

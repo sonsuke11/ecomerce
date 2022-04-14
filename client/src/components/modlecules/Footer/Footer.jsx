@@ -6,8 +6,8 @@ const Footer = () => {
   return (
     <div className="footer__fluid">
       <div className="footer__rules--block">
-        {footerRules.map((item) => (
-          <div className="footer__rules--item">
+        {footerRules.map((item, index) => (
+          <div className="footer__rules--item" key={index}>
             <img src={item.icon} alt="" className="footer__rules--icon" />
             <h5 className="footer__rules--heading">{item.heading}</h5>
             <p className="footer__rules--content">{item.content}</p>

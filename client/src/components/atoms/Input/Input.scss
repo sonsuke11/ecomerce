@@ -1,5 +1,12 @@
 @import "../../../sass/variables";
 .input__block {
+  position: relative;
+  & .input__icon--right{
+    position: absolute;
+    width: 2rem;
+    top:50%;
+    right: 1rem;
+  }
   & .input__label {
     display: block;
     margin-bottom: 0.4rem;
@@ -17,6 +24,9 @@
     background-color: $white;
     height: 4.2rem;
     width: 100%;
+    &.has__icon{
+      padding-right: 3.5rem;
+    }
     &.radius {
       height: 3.8rem;
       padding-left: 1.2rem;

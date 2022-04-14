@@ -1,8 +1,19 @@
-@import "../../../sass/base.scss";
+@import "../../../sass/base";
+@import "../../../sass/variables";
 
 .icon__button--img {
+    display: flex;
     & img{
-        width:100%;
+        width: 100%;
+    }
+    &.bg-gray{
+        background-color:$gray;
+        padding:1rem;
+        border-radius: 0.5rem;
+        &:hover{
+
+            filter: brightness(90%);
+        }
     }
 }
 

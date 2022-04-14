@@ -9,12 +9,24 @@ const Product = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  imageUrl: {
-    type: String,
+  images: {
+    type: [String],
   },
   description: {
     type: String,
     require: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  rank: {
+    type: Number,
+    default: 0,
+  },
+  numOfViews: {
+    type: Number,
+    default: 0,
   },
 })
 

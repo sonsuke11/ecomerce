@@ -13,7 +13,17 @@ const icHeartFill = `${PATH_IMG}ic_heart_fill.png`
 const icHeart = `${PATH_IMG}ic_heart.png`
 const icStar = `${PATH_IMG}ic_star.png`
 const icStarFill = `${PATH_IMG}ic_star_fill.png`
+const icAddToCart = `${PATH_IMG}ic_add_to_cart.png`
+const icPlus = `${PATH_IMG}ic_plus.png`
+const icAdd = `${PATH_IMG}ic_add.png`
+const icView = `${PATH_IMG}ic_view.svg`
+const icHidden = `${PATH_IMG}ic_hidden.png`
 const images = {
+  icHidden,
+  icView,
+  icAdd,
+  icAddToCart,
+  icPlus,
   icHeartFill,
   icHeart,
   logo,

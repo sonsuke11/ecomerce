@@ -22,3 +22,5 @@ export const footerRules = [
     content: "Đồng giá 25k toàn quốc",
   },
 ]
+
+export const BASE_URL = "http://localhost:5000/api"

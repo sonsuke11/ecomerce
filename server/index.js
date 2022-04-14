@@ -7,14 +7,17 @@ const productRoute = require("./routes/product")
 const handleError = require("./middlewares/handlerError")
 const { options } = require("./swagger")
 const swaggerJSDoc = require("swagger-jsdoc")
+const cors = require("cors")
 
 const app = express()
+
 const PORT = process.env.PORT || 3000
 //connectDB
 connectDB()
 
 // middlewares
 const spec = swaggerJSDoc(options)
+app.use(cors())
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec))
 app.use(express.json())
 app.use("/api/auth", authRoute)

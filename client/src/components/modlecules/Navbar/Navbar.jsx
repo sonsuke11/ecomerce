@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 
 import "./Navbar.scss"
 
@@ -27,8 +27,10 @@ const Navbar = () => {
   return (
     <div className="navbar__fluid">
       <div className="navbar__containter">
-        {navItems.map((item) => (
-          <div className="navbar__item">{item.label}</div>
+        {navItems.map((item, index) => (
+          <div className="navbar__item" key={index}>
+            {item.label}
+          </div>
         ))}
       </div>
     </div>

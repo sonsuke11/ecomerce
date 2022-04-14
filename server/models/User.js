@@ -18,6 +18,13 @@ const UserSchema = mongoose.Schema({
     required: [true, "Please provide a password"],
     type: String,
   },
+  address: String,
+  avartar: String,
+  phoneNum: String,
+  role: {
+    type: Number,
+    default: 1,
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 })

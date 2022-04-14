@@ -1,7 +1,9 @@
 const UserSchema = require("../models/User")
+const _ = require("lodash")
 const ErrorResponse = require("../utils/errorResponse")
 const sendMail = require("../utils/sendMail")
 const crypto = require("crypto")
+const User = require("../models/User")
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body
@@ -84,4 +86,15 @@ exports.resetPassword = async (req, res, next) => {
 
     res.status(200).json({ success: true, message: "Reset Password Success" })
   } catch (error) {}
+}
+
+exports.getUserInfo = async (req, res, next) => {
+  const userReq = req.user
+  try {
+    const user = _.pick(userReq, ["username", "role", "email"])
+    console.log(user)
+    res.status(200).json({ success: true, data: user })
+  } catch (error) {
+    next(error)
+  }
 }
