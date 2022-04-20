@@ -9,13 +9,13 @@
   }
   & .input__label {
     display: block;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.8rem;
     & small {
       color: $danger;
     }
   }
   & .input {
-    padding-left: 0.6rem;
+    padding-left: 0.8rem;
     font-size: inherit;
     display: block;
     border-radius: 5px;
@@ -46,5 +46,6 @@
   & .input__error--text {
     color: $danger;
     font-size: 1.4rem;
+    margin-top: 0.6rem;
   }
 }

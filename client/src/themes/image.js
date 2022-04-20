@@ -18,7 +18,24 @@ const icPlus = `${PATH_IMG}ic_plus.png`
 const icAdd = `${PATH_IMG}ic_add.png`
 const icView = `${PATH_IMG}ic_view.svg`
 const icHidden = `${PATH_IMG}ic_hidden.png`
+const icClose = `${PATH_IMG}ic_close.png`
+const icFilter = `${PATH_IMG}ic_filter.png`
+const icLineChart = `${PATH_IMG}ic_line_chart.png`
+const icUserAdmin = `${PATH_IMG}ic_user.png`
+const icProduct = `${PATH_IMG}ic_product.png`
+const icList = `${PATH_IMG}ic_list.png`
+const icCarretDown = `${PATH_IMG}ic_carret_down.png`
+const icTrash = `${PATH_IMG}ic_trash.png`
+const icEdit = `${PATH_IMG}ic_edit.png`
+const icPlusWhite = `${PATH_IMG}ic_plus.svg`
 const images = {
+  icEdit,
+  icPlusWhite,
+  icTrash,
+  icCarretDown,
+  icFilter,
+  icUserAdmin,
+  icClose,
   icHidden,
   icView,
   icAdd,
@@ -37,5 +54,8 @@ const images = {
   icSystemStore,
   icStarFill,
   icStar,
+  icLineChart,
+  icProduct,
+  icList,
 }
 export default images

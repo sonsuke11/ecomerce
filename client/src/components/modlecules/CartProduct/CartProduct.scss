@@ -1,4 +1,5 @@
 @import "../../../sass/mixin";
+@import "../../../sass/variables";
 .margin__cart{
   margin-top: 24px;
 }
@@ -8,9 +9,12 @@
   overflow: hidden;
   @include box-shadow;
   & .product__image {
-    overflow: hidden;
     padding-top: 24rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
+
   & .product__action{
     padding-inline:1.5rem;
     margin-bottom: 1.5rem;
@@ -21,6 +25,7 @@
   }
   & .product__info {
     padding: 2rem 1.5rem 0 1.5rem;
+    border-top: 1px solid $gray;
     & .product__name {
       font-weight: 300;
     }

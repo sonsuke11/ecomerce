@@ -7,6 +7,7 @@ import "./Login.scss"
 import useUser from "../../hooks/useUser"
 import { ToastContext } from "../../App"
 import { getMessageError } from "../../utils/helpers"
+import { ADMIN } from "../../utils/constants"
 
 const Login = () => {
   const [isHidden, setIsHidden] = useState(false)
@@ -16,21 +17,36 @@ const Login = () => {
     email: "",
     password: "",
   })
-  const { login } = useUser()
+  const { login, getUserInfo } = useUser()
   const handleClickIcon = () => {
     setIsHidden(!isHidden)
+  }
+  const handleGetUserInfo = () => {
+    getUserInfo(
+      (res) => {
+        console.log("res :>> ", res)
+        if (res?.data?.role === ADMIN) {
+          history("/admin/dashboard")
+        } else {
+          history("/")
+        }
+      },
+      () => {
+        // do nothing
+      }
+    )
   }
   const handleLoginClick = () => {
     login(
       user,
       (res) => {
         toast("success", "Đăng nhập thành công")
-        console.log(res)
-        localStorage.setItem("user", res.accessToken)
-        history("/")
+        localStorage.setItem("user", res?.accessToken)
+        setTimeout(() => {
+          handleGetUserInfo()
+        }, 1000)
       },
       (error) => {
-        console.log(error.response.data.error)
         toast("error", getMessageError(error))
       }
     )
@@ -42,19 +58,19 @@ const Login = () => {
       <br />
       <br />
       <Input
-        label="Username"
         type="text"
         value={user.username}
         onChange={(value) => setUser({ ...user, email: value })}
+        placeholder="Username"
       />
       <br />
       <Input
         value={user.password}
         onChange={(value) => setUser({ ...user, password: value })}
-        label="Password"
         type={isHidden ? "text" : "password"}
         icon={isHidden ? images.icView : images.icHidden}
         onClickIcon={handleClickIcon}
+        placeholder="Password"
       />
       <br />
       <br />

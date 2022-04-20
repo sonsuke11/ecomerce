@@ -1,0 +1,23 @@
+.pagination {
+    display: inline-block;
+    cursor: pointer;
+    & li {
+        color: black;
+        float: left;
+        padding: 6px 10px;
+        text-decoration: none;
+        &:not(:first-child){
+            margin-left:0.4rem;
+        }
+        &.active {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        &:hover:not(.active) {
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+    }
+}
+

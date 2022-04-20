@@ -1,0 +1,37 @@
+.nav__menu--wrap{
+    padding-inline: 2rem;
+    padding-top: 1.4rem;
+}
+.nav__menu {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    & .nav__menu--icon {
+        width: 2.4rem;
+        height:2.4rem;
+        margin-right: 1.2rem;
+    }
+    & .nav__menu--content {
+        font-weight: bold;
+        flex:1;
+        font-size: 1.6rem;
+    }
+    & .nav__expand--icon{
+        width:2.5rem;
+        transition: all .4s ease;
+        &.show{
+            transform:rotate(-180deg)
+        }
+    }
+}
+
+.nav__link--list{
+    padding-inline: 4rem;
+    margin-top: 1rem;
+    font-size:1.4rem;
+    font-weight: bold;
+    overflow:hidden;
+    transition:  0.4s max-height;
+   
+}

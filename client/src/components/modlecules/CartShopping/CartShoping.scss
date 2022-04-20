@@ -1,0 +1,86 @@
+@import "../../../sass/variables";
+.modal__overlay{
+    background-color: rgba(40 ,37, 37,0.5);
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    & .modal__wrapper{
+        background-color: #fff;
+        width: 350px;
+        height: 100vh;
+        position: absolute;
+        right: 0;
+        display: flex;
+        max-height: 100vh;
+        flex-direction: column;
+        & .cart__header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding:2.6rem ;
+            border-bottom: 2px solid $gray;
+            & .cart__title{
+                font-size: 1.8rem;
+            }
+            & .cart__close{
+                height:1.6rem;
+            }
+        }
+        & .cart__body{
+            flex:1;
+            & .cart__block{
+                padding: 2rem;
+                & .cart__qty--block{
+                    display: flex;
+                    justify-content:flex-end;
+                    & .cart__qty{
+                        display: flex;
+                        align-items:center;
+                        background-color: #EFF2f5;
+                        border-radius:2rem;
+                        & .cart__qty--num{
+                            font-size: 1.3rem;
+                        }
+                        & .cart__qty--btn{
+                            padding: 1rem 2rem;
+                        }
+                    }
+                }
+                & .cart__item--wrap{
+                    display: flex;
+                    & .cart__img{
+                        width: 10rem;
+                        height: 10rem;
+                        flex-basis: 10rem;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        border: 1px solid $gray;
+                    }
+                }
+                & .cart__info{
+                    flex-basis: 19.6rem;
+                    padding-inline: 1rem;
+                    font-size: 1.8rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    & .cart__product--price {
+                        font-size: 1.6rem;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        & .cart__footer{
+            border-top: 1px solid $gray;
+            padding-block: 1rem;
+            display: flex;
+            justify-content:center;
+            background-color:$gray
+        }
+    }
+
+}

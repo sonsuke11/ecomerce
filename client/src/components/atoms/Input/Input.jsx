@@ -12,11 +12,13 @@ const Input = ({
   icon,
   variant,
   onClickIcon,
+
   ...props
 }) => {
   const handleChange = (e) => {
     onChange(e.target.value)
   }
+
   const classNames = [
     "input",
     variant ?? "",

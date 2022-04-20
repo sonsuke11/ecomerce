@@ -1,10 +1,10 @@
 import React from "react"
 import "./Badge.scss"
-const Badge = ({ children }) => {
+const Badge = ({ children, qty }) => {
   return (
     <div className="badge__wrap">
       {children}
-      <span className="badge__num">(3)</span>
+      <span className="badge__num">({qty})</span>
     </div>
   )
 }

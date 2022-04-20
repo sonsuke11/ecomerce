@@ -11,7 +11,6 @@ exports.login = async (req, res, next) => {
     return next(new ErrorResponse(400, "Missing email or password"))
   try {
     const user = await UserSchema.findOne({ email })
-    console.log(user)
     if (!user)
       return next(new ErrorResponse(404, "Not found user with this email"))
     const isMatch = await user.isMatchPassword(password)
@@ -36,15 +35,12 @@ exports.register = async (req, res, next) => {
 
 exports.forgotPassword = async (req, res, next) => {
   const { email } = req.body
-  console.log(email)
   try {
     const user = await UserSchema.findOne({ email })
     if (!user) {
-      console.log("no user")
       return next(new ErrorResponse(404, "Email not found"))
     }
     const resetToken = user.getResetPasswordToken()
-    console.log(resetToken)
     await user.save()
     const options = {
       from: "yuriNguen102@gmail.com",
@@ -92,7 +88,76 @@ exports.getUserInfo = async (req, res, next) => {
   const userReq = req.user
   try {
     const user = _.pick(userReq, ["username", "role", "email"])
-    console.log(user)
+    res.status(200).json({ success: true, data: user })
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.updateUser = async (req, res, next) => {
+  const params = req.body
+  try {
+    const userDB = await User.findById(params._id)
+    if (!userDB) {
+      return next(new ErrorResponse(404, "User not found"))
+    }
+    const userUpdated = await User.findByIdAndUpdate(
+      { _id: userDB._id },
+      { ...params },
+      { new: true }
+    )
+    res.status(200).json({ success: true, data: userUpdated })
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
+exports.deleteUser = async (req, res, next) => {
+  const { _id } = req.body
+  try {
+    const userFindedFromDB = await User.findById(_id)
+    if (!userFindedFromDB) {
+      return next(new ErrorResponse(404, "User not found"))
+    }
+    await User.findByIdAndDelete(_id)
+    res.status(200).json({ success: true, message: "User delete successfully" })
+  } catch (error) {
+    next(error)
+  }
+}
+exports.searchUser = async (req, res, next) => {
+  const { page, size } = req.body
+  try {
+    let pageList = page
+    let pageSize = size
+    if (!pageList) {
+      pageList = 1
+    }
+    if (!pageSize) {
+      pageSize = 10
+    }
+    const listUser = await User.find({})
+    const totalPage = Math.ceil(listUser.length / pageSize)
+    res.status(200).json({
+      success: true,
+      list: listUser.slice(pageList * pageSize - pageSize, pageList * pageSize),
+      page: pageList,
+      size: pageSize,
+      totalPage,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.getUserById = async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const user = await User.findById(id)
+    if (!user) {
+      return next(new ErrorResponse(404, "User not found"))
+    }
     res.status(200).json({ success: true, data: user })
   } catch (error) {
     next(error)

@@ -1,27 +1,56 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Footer from "../Footer/Footer"
+import _ from "lodash"
 
 import Header from "../Header/Header"
 import Navbar from "../Navbar/Navbar"
 import useUser from "../../../hooks/useUser"
+import useCart from "../../../hooks/useCart"
+import { useNavigate } from "react-router-dom"
+import CartShoping from "../CartShopping/CartShoping"
 
 const Layout = ({ children }) => {
-  const { getUserInfo } = useUser()
-  useEffect(() => {
+  const { getUserInfo, userData } = useUser()
+  const [showCart, setShowCart] = useState(false)
+  const { viewCartByUser } = useCart()
+  const navigation = useNavigate()
+  const fetchUserInfo = () => {
     getUserInfo(
-      (res) => {
-        console.log(res)
+      () => {
+        // do nothing
       },
-      (err) => {}
+      () => {
+        navigation("/login")
+      }
     )
+  }
+  const fetchCartByUser = () => {
+    viewCartByUser(
+      () => {
+        // do nothing
+      },
+      () => {
+        // do nothing
+      }
+    )
+  }
+  useEffect(() => {
+    fetchUserInfo()
+    fetchCartByUser()
   }, [])
-
+  const handleCloseCart = () => {
+    setShowCart(false)
+  }
+  const handleToggleCart = () => {
+    setShowCart(!showCart)
+  }
   return (
     <>
-      <Header />
+      <Header userName={userData?.auth?.username} onToggle={handleToggleCart} />
       <Navbar />
       {children}
       <Footer />
+      <CartShoping show={showCart} onClose={handleCloseCart} />
     </>
   )
 }

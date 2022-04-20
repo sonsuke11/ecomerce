@@ -1,11 +1,12 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { createSearchParams, useNavigate } from "react-router-dom"
 import images from "../../../themes/image"
 import { formatCurrent } from "../../../utils/helpers"
 import IconButton from "../../atoms/IconButton/IconButton"
 import Button from "../../atoms/Button/Button"
 import "./CartProduct.scss"
-const CartProduct = ({ product }) => {
+
+const CartProduct = ({ product, onAddToCartClick }) => {
   const history = useNavigate()
   const [isLike, setIsLike] = useState(false)
   const arrRank = new Array(5)
@@ -29,11 +30,13 @@ const CartProduct = ({ product }) => {
     )
   }
   return (
-    <div className="col c-3 margin__cart">
+    <div className="col c-3 ">
       <div className="cart__wrap">
         <div
           className="product__image"
-          style={{ backgroundImage: `url(${product.images[0]})` }}
+          style={{
+            backgroundImage: `url("data:image/png;base64,${product.images[0].file}")`,
+          }}
         ></div>
         <div className="product__info">
           <div className="product__name mb-10">{product.name}</div>
@@ -50,8 +53,18 @@ const CartProduct = ({ product }) => {
           </div>
         </div>
         <div className="product__action">
-          <IconButton icon={images.icView} onClick={() => history("/")} />
-          <Button>Add to cart</Button>
+          <IconButton
+            icon={images.icView}
+            onClick={() =>
+              history({
+                pathname: "/detail",
+                search: createSearchParams({
+                  id: product._id,
+                }).toString(),
+              })
+            }
+          />
+          <Button onClick={() => onAddToCartClick(product)}>Add to cart</Button>
         </div>
       </div>
     </div>

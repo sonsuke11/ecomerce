@@ -1,6 +1,7 @@
 import React from "react"
 import Icon from "../Icon/icon"
 import "./IconButton.scss"
+
 const IconButton = ({ icon, className, children, variant, ...props }) => {
   const classNames = ["icon__button--img", className, variant]
     .filter((x) => x)

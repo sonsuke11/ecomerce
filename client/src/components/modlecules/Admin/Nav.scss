@@ -1,0 +1,19 @@
+@import '../../../sass/variables';
+
+.nav__wrapper{
+    & a{
+        color:#000;
+    }
+    & .nav__logo{
+        background-color: $gray;
+        & img{
+            width: 15rem;
+            margin: 0 auto;
+        }
+    }
+    
+}
+.nav__link--item{
+    line-height: 1.2;
+        padding: 1rem;
+}

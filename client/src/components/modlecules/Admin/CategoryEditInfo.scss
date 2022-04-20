@@ -1,0 +1,15 @@
+@import "../../../sass/variables";
+.category__info{
+    width:100%;
+    background-color: $white;
+    padding: 3rem;
+    border-radius:$border-radius;
+    & .category__input{
+        margin-bottom: 2rem;
+    }
+    & h3{
+        font-size:1.8rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+    }
+}
