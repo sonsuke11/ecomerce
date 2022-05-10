@@ -1,0 +1,18 @@
+@import "../../../sass/variables";
+.filter__block{
+    padding:2rem;
+    background-color: $white;
+    border-radius: 5px;
+    & .filter__head{
+        display: flex;
+        align-items: center;
+        & .filter__icon{
+            width:2rem;
+        }
+        & .filter__heading{
+            font-size: 1.7rem;
+            margin-left: 2rem;
+            font-weight: 500;
+        }
+    }
+}

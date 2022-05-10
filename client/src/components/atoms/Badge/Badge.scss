@@ -1,0 +1,12 @@
+@import "../../../sass/variables";
+
+.badge__wrap{
+    display: flex;
+    align-items: center;
+    & .badge__num{
+        font-size: 1.4rem;
+        font-weight:bold;
+        background-color:white;
+        margin-left:-3rem;
+    }
+}

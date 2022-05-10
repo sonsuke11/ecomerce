@@ -1,7 +1,26 @@
 const express = require("express")
-const { viewListProduct } = require("../controllers/product")
+const multer = require("multer")
+const {
+  searchProduct,
+  createProduct,
+  viewProductById,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/product")
+const admin = require("../middlewares/admin")
+const authorize = require("../middlewares/auth")
+const upload = require("../middlewares/upload")
 const router = express.Router()
 
-router.route("/view").get(viewListProduct)
+// normal user
+router.route("/search").post(authorize, searchProduct)
+router.route("/:id").get(authorize, viewProductById)
 
+// admin user
+router
+  .route("/")
+  .post(admin, upload.array("images", 12), createProduct)
+  .delete(admin, deleteProduct)
+
+router.route("/edit").post(admin, upload.any(), updateProduct)
 module.exports = router

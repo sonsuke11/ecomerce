@@ -1,24 +1,26 @@
 const express = require("express")
 require("dotenv").config()
-const swaggerUi = require("swagger-ui-express")
+const cors = require("cors")
+const morgan = require("morgan")
 const connectDB = require("./config/db")
-const authRoute = require("./routes/auth")
-const productRoute = require("./routes/product")
+const appRoutes = require("./routes")
 const handleError = require("./middlewares/handlerError")
-const { options } = require("./swagger")
-const swaggerJSDoc = require("swagger-jsdoc")
 
 const app = express()
+
 const PORT = process.env.PORT || 3000
 //connectDB
 connectDB()
 
 // middlewares
-const spec = swaggerJSDoc(options)
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec))
+app.use(cors())
+app.use(morgan("tiny"))
 app.use(express.json())
-app.use("/api/auth", authRoute)
-app.use("/api/product", productRoute)
+app.use("/api/auth", appRoutes.authRoute)
+app.use("/api/product", appRoutes.productRoute)
+app.use("/api/cart", appRoutes.cartRoute)
+app.use("/api/category", appRoutes.categoryRoute)
+app.use("/api/order", appRoutes.orderRoute)
 app.use(handleError)
 
 app.listen(PORT, console.log(`listening on port ${PORT}`))

@@ -18,7 +18,7 @@
       position: relative;
       & .button__input {
         position: absolute;
-        top: 0.2rem;
+        top: 0.6rem;
         right: 0.2rem;
         padding: 1rem;
         width: 4rem;
@@ -28,6 +28,13 @@
       margin-left: 1rem;
       display: flex;
       align-items: center;
+      & .button__relative{
+        position: relative;
+        & span{
+          position: absolute;
+          top: 100%;
+        }
+      }
     }
   }
 }

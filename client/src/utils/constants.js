@@ -22,3 +22,19 @@ export const footerRules = [
     content: "Đồng giá 25k toàn quốc",
   },
 ]
+
+export const BASE_URL = "http://localhost:5000/api"
+
+export const ADMIN = 2
+export const USER = 1
+export const APP_ROLES = {
+  ADMIN,
+  USER,
+}
+
+export const APP_ROUTES = {
+  login: "/login",
+  adminLogin: "/admin/login",
+  listCategory: "/admin/category-list",
+  editCategory: "/admin/category-edit",
+}

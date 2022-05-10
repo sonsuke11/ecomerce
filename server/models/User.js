@@ -18,9 +18,23 @@ const UserSchema = mongoose.Schema({
     required: [true, "Please provide a password"],
     type: String,
   },
+  address: String,
+  avartar: String,
+  phoneNum: String,
+  role: {
+    type: Number,
+    enum: [1, 2],
+    default: 1,
+  },
+  enable: {
+    type: Number,
+    enum: [0, 1],
+    default: 1,
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 })
+
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) next()
 
@@ -46,4 +60,4 @@ UserSchema.methods.getResetPasswordToken = function () {
 UserSchema.methods.isMatchPassword = function (password) {
   return bcrypt.compare(password, this.password)
 }
-module.exports = mongoose.model("users", UserSchema)
+module.exports = mongoose.model("User", UserSchema)

@@ -2,7 +2,6 @@ const ErrorResponse = require("../utils/errorResponse")
 
 const handlerError = (err, req, res, next) => {
   let error = { ...err }
-  console.log(err)
   if (err.code === 11000) {
     const message = "Duplicate field value"
     error = new ErrorResponse(400, message)

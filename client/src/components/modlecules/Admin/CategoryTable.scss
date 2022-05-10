@@ -1,0 +1,33 @@
+@import "../../../sass/variables";
+.table__block{
+    padding: 2rem;
+    border-radius: $border-radius;
+    background-color: $white;
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        & tr {
+            border-bottom: 1px solid #ddd;
+            & th{
+
+                text-align: left;
+            }
+            & td,th{
+                &:not(:first-child){
+                    padding: 2.3rem 1rem;
+                }
+            }
+            & td.table__icon{
+                display: flex;
+                & img{
+                    width:2rem;
+                    &:not(:first-child){
+                        margin-left: 0.5rem;
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+

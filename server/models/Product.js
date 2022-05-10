@@ -4,18 +4,45 @@ const Product = mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
-  quantity: {
+  instock: {
     type: Number,
-    default: 0,
+    default: 1,
   },
-  imageUrl: {
-    type: String,
+  images: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Image",
+    validate: [
+      (val) => arrayLimit(val, 1),
+      "Length of image must be greater than 1",
+    ],
   },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
+  rank: {
+    type: Number,
+    default: 0,
+  },
+  numOfViews: {
+    type: Number,
+    default: 0,
+  },
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+  },
+  createAt: Date,
+  updaeAt: Date,
 })
 
+const arrayLimit = (val, limit) => {
+  return val?.length >= limit
+}
 module.exports = mongoose.model("Product", Product)
