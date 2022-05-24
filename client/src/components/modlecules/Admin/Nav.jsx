@@ -33,10 +33,6 @@ const Nav = () => {
           path: "/admin/user-list",
           content: "User List",
         },
-        {
-          path: "/admin/user-edit",
-          content: "User Edit",
-        },
       ],
     },
     {
@@ -45,6 +41,20 @@ const Nav = () => {
       child: [
         {
           path: "/admin/product-list",
+          content: "Product List",
+        },
+        {
+          path: "/admin/product-create",
+          content: "Add Product",
+        },
+      ],
+    },
+    {
+      icon: images.icProduct,
+      title: "Order",
+      child: [
+        {
+          path: "/admin/order-list",
           content: "Product List",
         },
         {

@@ -38,6 +38,7 @@ exports.createCategory = async (req, res, next) => {
     })
     res.status(201).json({ success: true, data: categoryCreated })
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }
@@ -50,10 +51,13 @@ exports.updateCategory = async (req, res, next) => {
       return model
     }
   }
+  if (!categoryFromReq._id) {
+    return next(new ErrorResponse(401, "Must provide a id of product"))
+  }
   try {
     const categoryUpdated = await Category.findByIdAndUpdate(
       categoryFromReq._id,
-      categoryFromReq,
+      { ...categoryFromReq, updateAt: Date.now() },
       { new: true },
       checkIdExist
     ).clone()

@@ -3,7 +3,8 @@ import productSaga from "./Product/sagas"
 import userSaga from "./User/sagas"
 import cartSaga from "./Cart/sagas"
 import categorySaga from "./Category/sagas"
-import plaseSearchSaga from "./PlaceSeach/sagas"
+import placeSearchSaga from "./PlaceSeach/sagas"
+import orderSaga from "./Order/sagas"
 
 export default function* rootSaga() {
   yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     userSaga(),
     cartSaga(),
     categorySaga(),
-    plaseSearchSaga(),
+    placeSearchSaga(),
+    orderSaga(),
   ])
 }

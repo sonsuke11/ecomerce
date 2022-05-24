@@ -6,3 +6,7 @@ export const addToCart = (params) => {
 export const viewCart = () => {
   return api.get("/cart")
 }
+
+export const deleteItemsInCart = (params) => {
+  return api.delete("/cart", { data: params })
+}

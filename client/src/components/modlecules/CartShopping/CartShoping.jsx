@@ -65,12 +65,14 @@ const CartShoping = ({ show, onClose }) => {
           ))}
         </div>
         <div className="cart__footer">
-          <Button
-            className="cart__footer--button"
-            onClick={() => history("/order")}
-          >
-            Đặt hàng {formatCurrent(caculateTotalPrice())}
-          </Button>
+          {caculateTotalPrice() && (
+            <Button
+              className="cart__footer--button"
+              onClick={() => history("/order")}
+            >
+              Đặt hàng {formatCurrent(caculateTotalPrice() || 0)}
+            </Button>
+          )}
         </div>
       </div>
     </div>,

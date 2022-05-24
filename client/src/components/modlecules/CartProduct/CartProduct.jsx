@@ -5,9 +5,11 @@ import { formatCurrent } from "../../../utils/helpers"
 import IconButton from "../../atoms/IconButton/IconButton"
 import Button from "../../atoms/Button/Button"
 import "./CartProduct.scss"
+import useProduct from "../../../hooks/useProduct"
 
 const CartProduct = ({ product, onAddToCartClick }) => {
   const history = useNavigate()
+  const { updateProduct } = useProduct()
   const [isLike, setIsLike] = useState(false)
   const arrRank = new Array(5)
     .fill(0)
@@ -30,7 +32,7 @@ const CartProduct = ({ product, onAddToCartClick }) => {
     )
   }
   return (
-    <div className="col c-3 ">
+    <div className="col c-3">
       <div className="cart__wrap">
         <div
           className="product__image"
@@ -39,7 +41,9 @@ const CartProduct = ({ product, onAddToCartClick }) => {
           }}
         ></div>
         <div className="product__info">
-          <div className="product__name mb-10">{product.name}</div>
+          <div className="product__name mb-10" title={product.name}>
+            {product.name}
+          </div>
           <div className="product__price mb-10">
             {formatCurrent(product.price)}
           </div>
@@ -55,16 +59,26 @@ const CartProduct = ({ product, onAddToCartClick }) => {
         <div className="product__action">
           <IconButton
             icon={images.icView}
-            onClick={() =>
+            onClick={() => {
+              updateProduct(
+                { _id: product._id, numOfViews: product.numOfViews + 1 },
+                () => {},
+                () => {}
+              )
               history({
                 pathname: "/detail",
                 search: createSearchParams({
                   id: product._id,
                 }).toString(),
               })
-            }
+            }}
           />
-          <Button onClick={() => onAddToCartClick(product)}>Add to cart</Button>
+          <Button
+            disabled={!product?.instock}
+            onClick={() => onAddToCartClick(product)}
+          >
+            Thêm vào giỏ hàng
+          </Button>
         </div>
       </div>
     </div>

@@ -69,3 +69,10 @@
 
   }
 }
+
+button:disabled{
+  background-color:$gray !important;
+  color:#00000059 !important;
+  border-color: $gray !important;
+  cursor:no-drop;
+}

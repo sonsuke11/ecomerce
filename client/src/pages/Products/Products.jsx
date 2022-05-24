@@ -1,9 +1,10 @@
+import _ from "lodash"
 import React, { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
+import Paginate from "../../components/atoms/Paginate/Paginate"
 
 import CartProduct from "../../components/modlecules/CartProduct/CartProduct"
 import Layout from "../../components/modlecules/Layout/Layout"
-import SideBar from "../../components/modlecules/SideBar/SideBar"
 import useCart from "../../hooks/useCart"
 import useProduct from "../../hooks/useProduct"
 import "./product.scss"
@@ -14,24 +15,31 @@ const Products = () => {
   const { addToCart, viewCartByUser } = useCart()
 
   const [searchParams] = useSearchParams()
+  const searchKeyword = searchParams.get("word")
+
+  const [paramSearch, setParamSearch] = useState({})
   useEffect(() => {
-    const params = {}
-    const searchKeyword = searchParams.get("word")
+    handleSearch()
+  }, [searchKeyword])
+
+  const handleSearch = (params) => {
+    const search = { ...paramSearch, ...params }
     if (searchKeyword) {
-      params[`name`] = searchKeyword
+      search[`name`] = searchKeyword
+    } else {
+      delete search[`name`]
     }
     searchProduct(
-      params,
+      search,
       (res) => {
-        console.log("res", res)
         setProducts(res)
+        setParamSearch(search)
       },
       () => {
         //do nothing
       }
     )
-  }, [searchParams])
-
+  }
   const refreshCartData = () => {
     viewCartByUser(
       () => {
@@ -42,7 +50,7 @@ const Products = () => {
   }
   const handleAddToCart = (product) => {
     addToCart(
-      product,
+      { ..._.omit(product, ["images"]), qty: 1 },
       () => {
         // do nothing
         refreshCartData()
@@ -55,20 +63,34 @@ const Products = () => {
   return (
     <Layout>
       <div className="grid wide container__product">
-        <div className="row product__margin">
-          <SideBar />
-          <div className="col c-10 ">
-            <div style={{ display: "flex" }}>
-              {products?.list?.map((product) => (
-                <CartProduct
-                  key={product._id}
-                  product={product}
-                  onAddToCartClick={handleAddToCart}
-                />
-              ))}
-            </div>
+        <div className=" product__margin">
+          {/* <SideBar /> */}
+          {/* <div className="col c-10 "> */}
+          <div className="row" style={{ rowGap: 24 }}>
+            {products?.list?.map((product) => (
+              <CartProduct
+                key={product._id}
+                product={product}
+                onAddToCartClick={handleAddToCart}
+              />
+            ))}
+            {/* </div> */}
           </div>
         </div>
+        <br />
+        <br />
+        <br />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Paginate
+            size={products?.totalPage}
+            onChangePage={(page) => {
+              handleSearch({ ...searchParams, page })
+            }}
+            active={products?.page}
+          />
+        </div>
+        <br />
+        <br />
       </div>
     </Layout>
   )

@@ -27,6 +27,7 @@ const Input = ({
   ]
     .join(" ")
     .trim()
+
   return (
     <div className="input__block">
       <div className="input__label">

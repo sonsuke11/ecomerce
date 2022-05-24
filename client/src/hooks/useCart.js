@@ -10,7 +10,10 @@ const useCart = () => {
   const addToCart = (params, onSuccess, onError) => {
     return dispatch(actions.addToCart({ params, onSuccess, onError }))
   }
-  return { viewCartByUser, addToCart, cartData }
+  const deleteItemsInCart = (params, onSuccess, onError) => {
+    return dispatch(actions.deleteItemsInCart({ params, onSuccess, onError }))
+  }
+  return { viewCartByUser, addToCart, cartData, deleteItemsInCart }
 }
 
 export default useCart

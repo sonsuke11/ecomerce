@@ -3,7 +3,7 @@ import images from "../../../themes/image"
 import { APP_ROLES } from "../../../utils/constants"
 import Paginate from "../../atoms/Paginate/Paginate"
 
-const UserTable = ({ listData, handleEdit, handleDelete, onChangePage }) => {
+const UserTable = ({ listData, handleEdit, onChangePage }) => {
   const renderRole = (data) => {
     let role = ""
     Object.keys(APP_ROLES).forEach((key) => {
@@ -38,11 +38,6 @@ const UserTable = ({ listData, handleEdit, handleDelete, onChangePage }) => {
                   src={images.icEdit}
                   alt=""
                   onClick={() => handleEdit(item._id)}
-                />
-                <img
-                  src={images.icTrash}
-                  alt=""
-                  onClick={() => handleDelete(item._id)}
                 />
               </td>
             </tr>

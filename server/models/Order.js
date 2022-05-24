@@ -13,12 +13,32 @@ const OrderSchema = mongoose.Schema(
     },
     status: {
       type: Number,
-      enum: [1, 2, 3, 4, 5],
+      enum: [1, 2, 3, 4],
       default: 1,
       validate: [
-        (val) => [1, 2, 3, 4, 5].some((item) => item === val),
+        (val) => [1, 2, 3, 4].some((item) => item === val),
         "Value of status invalid",
       ],
+    },
+    address: {
+      type: String,
+      required: [true, "Please provide a address"],
+    },
+    email: {
+      type: String,
+    },
+    name: {
+      type: String,
+      required: [true, "Please provide name"],
+    },
+    phone: {
+      type: String,
+      required: [true, "Please provide phone"],
+    },
+    paymentDate: Date,
+    totalPrice: {
+      type: Number,
+      required: [true, "Please provide total price"],
     },
   },
   { timestamps: { createdAt: "createdAt", updateAt: "updateAt" } }

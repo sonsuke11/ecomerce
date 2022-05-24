@@ -23,7 +23,7 @@ const CategoryEditInfo = ({
             onChange={(value) => setData({ ...data, name: value })}
           />
         </div>
-        <div className="col c-6">
+        {/* <div className="col c-6">
           <Input
             label="Category Path"
             required
@@ -31,7 +31,7 @@ const CategoryEditInfo = ({
             value={data?.path}
             onChange={(value) => setData({ ...data, path: value })}
           />
-        </div>
+        </div> */}
         <div className="col c-6">
           <Input
             label="Description"

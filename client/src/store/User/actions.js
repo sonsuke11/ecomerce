@@ -20,6 +20,16 @@ export const setListUser = (params) => {
 export const getUserById = (params) => {
   return { type: types.GET_USER_BY_ID, payload: params }
 }
+export const register = (params) => {
+  return { type: types.REGISTER, payload: params }
+}
+export const forgotPassword = (params) => {
+  return { type: types.FORGOT_PASSWORD, payload: params }
+}
+
+export const resetPassword = (params) => {
+  return { type: types.RESET_PASSWORD, payload: params }
+}
 export const updateUser = (params) => {
   return { type: types.UPDATE_USER, payload: params }
 }

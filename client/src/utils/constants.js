@@ -38,3 +38,39 @@ export const APP_ROUTES = {
   listCategory: "/admin/category-list",
   editCategory: "/admin/category-edit",
 }
+
+export const Cancel = 0
+export const Waitting = 1
+export const Approved = 2
+export const Transport = 3
+export const Completed = 4
+export const ORDER_STATUS = {
+  Waitting,
+  Approved,
+  Transport,
+  Completed,
+}
+
+export const ShipPrice = 25000
+export const OrderStatusOption = [
+  {
+    label: "Đã hủy",
+    value: Cancel,
+  },
+  {
+    label: "Chờ xác nhận",
+    value: Waitting,
+  },
+  {
+    label: "Phê duyệt",
+    value: Approved,
+  },
+  {
+    label: "Vận Chuyển",
+    value: Transport,
+  },
+  {
+    label: "Hoàn thành",
+    value: Completed,
+  },
+]

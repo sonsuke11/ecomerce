@@ -3,37 +3,48 @@ const crypto = require("crypto")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
-const UserSchema = mongoose.Schema({
-  username: {
-    required: [true, "Please provide a username"],
-    type: String,
+const UserSchema = mongoose.Schema(
+  {
+    username: {
+      required: [true, "Please provide a username"],
+      type: String,
+    },
+    email: {
+      match: [
+        /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+        "please provide a valid email",
+      ],
+      required: [true, "Please provide a email"],
+      type: String,
+      unique: true,
+    },
+    password: {
+      required: [true, "Please provide a password"],
+      type: String,
+    },
+    address: String,
+    avartar: String,
+    dateOfBirth: String,
+    phone: {
+      type: String,
+      unique: [true, "Số điện thoại đã được đăng ký"],
+    },
+    role: {
+      type: Number,
+      enum: [1, 2],
+      default: 1,
+    },
+    enable: {
+      type: Number,
+      enum: [0, 1],
+      default: 1,
+    },
+    avatar: String,
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
   },
-  email: {
-    match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "please provide a valid email"],
-    required: [true, "Please provide a email"],
-    type: String,
-    unique: true,
-  },
-  password: {
-    required: [true, "Please provide a password"],
-    type: String,
-  },
-  address: String,
-  avartar: String,
-  phoneNum: String,
-  role: {
-    type: Number,
-    enum: [1, 2],
-    default: 1,
-  },
-  enable: {
-    type: Number,
-    enum: [0, 1],
-    default: 1,
-  },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-})
+  { timestamps: { createdAt: "createdAt", updateAt: "updateAt" } }
+)
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) next()

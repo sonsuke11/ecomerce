@@ -1,5 +1,6 @@
 const UserSchema = require("../models/User")
 const _ = require("lodash")
+const fs = require("fs")
 const ErrorResponse = require("../utils/errorResponse")
 const sendMail = require("../utils/sendMail")
 const crypto = require("crypto")
@@ -13,6 +14,8 @@ exports.login = async (req, res, next) => {
     const user = await UserSchema.findOne({ email })
     if (!user)
       return next(new ErrorResponse(404, "Not found user with this email"))
+    if (!user.enable)
+      return next(new ErrorResponse(401, "Tài khoản đã bị khóa"))
     const isMatch = await user.isMatchPassword(password)
     if (!isMatch) return next(new ErrorResponse(404, "Invalid Password"))
     const accessToken = await user.generateAccessToken()
@@ -47,7 +50,7 @@ exports.forgotPassword = async (req, res, next) => {
       to: "sonsuper102@gmail.com",
       subject: "Reset password",
       html: `<h1>Hear is the link to active:</h1>
-      <a href='http://localhost:3000/resetpassword/${resetToken}'>http://localhost:3000/resetpassword/${resetToken}</a>
+      <a href='http://localhost:3000/reset-password/${resetToken}'>http://localhost:3000/reset-password/${resetToken}</a>
       `,
     }
     await sendMail(options)
@@ -87,7 +90,14 @@ exports.resetPassword = async (req, res, next) => {
 exports.getUserInfo = async (req, res, next) => {
   const userReq = req.user
   try {
-    const user = _.pick(userReq, ["username", "role", "email"])
+    const user = _.pick(userReq, [
+      "username",
+      "role",
+      "email",
+      "phone",
+      "dateOfBirth",
+      "avatar",
+    ])
     res.status(200).json({ success: true, data: user })
   } catch (error) {
     next(error)
@@ -95,17 +105,28 @@ exports.getUserInfo = async (req, res, next) => {
 }
 
 exports.updateUser = async (req, res, next) => {
-  const params = req.body
+  let params = req.body
+  const currentUser = req.user
+  const { file } = req
+  if (file) {
+    const img = fs.readFileSync(file.path)
+    const encodeImg = img.toString("base64")
+    params = { ...params, avatar: encodeImg }
+  }
+
   try {
-    const userDB = await User.findById(params._id)
+    const userDB = await User.findById(currentUser._id)
+
     if (!userDB) {
       return next(new ErrorResponse(404, "User not found"))
     }
+
     const userUpdated = await User.findByIdAndUpdate(
       { _id: userDB._id },
-      { ...params },
+      { ...params, updateAt: Date.now() },
       { new: true }
     )
+
     res.status(200).json({ success: true, data: userUpdated })
   } catch (error) {
     console.log(error)

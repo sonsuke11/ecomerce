@@ -8,11 +8,14 @@ const ProductList = () => {
   const { searchProduct, deleteProduct } = useProduct()
   const [productData, setProductData] = useState()
   const history = useNavigate()
-  const fetchData = () => {
+  const [searchParams, setSearchParams] = useState({})
+  const fetchData = (params) => {
+    const search = { ...searchParams, ...params }
     searchProduct(
-      {},
+      search,
       (res) => {
         setProductData(res)
+        setSearchParams(search)
       },
       () => {}
     )
@@ -38,7 +41,9 @@ const ProductList = () => {
       }).toString(),
     })
   }
-  const onPageChange = () => {}
+  const onPageChange = (page) => {
+    fetchData({ ...searchParams, page })
+  }
   return (
     <AdminLayout>
       <div className="title__block">

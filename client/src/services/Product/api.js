@@ -1,10 +1,8 @@
-import _ from "lodash"
 import api from "../index"
 
 const config = {
   headers: { "Content-Type": "multipart/form-data" },
 }
-
 const searchProduct = (params) => {
   return api.post("/product/search", params)
 }

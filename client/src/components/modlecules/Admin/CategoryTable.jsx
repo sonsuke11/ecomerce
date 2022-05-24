@@ -14,7 +14,6 @@ const CategoryTable = ({ handleEdit, handleDelete, onChangePage }) => {
           <tr>
             <th>No</th>
             <th>Category Name</th>
-            <th>Path</th>
             <th>Description</th>
             <th>Setting</th>
           </tr>
@@ -23,9 +22,10 @@ const CategoryTable = ({ handleEdit, handleDelete, onChangePage }) => {
           {categoryData?.list?.map((item, index) => (
             <tr key={item._id}>
               <td>{index + 1}</td>
-              <td>{item.name}</td>
-              <td>{item.path}</td>
-              <td></td>
+              <td style={{ width: "600px", paddingLeft: "2rem" }}>
+                {item.name}
+              </td>
+              <td>{item.description}</td>
               <td className="table__icon">
                 <img
                   src={images.icEdit}

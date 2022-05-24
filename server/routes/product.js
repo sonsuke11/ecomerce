@@ -6,6 +6,7 @@ const {
   viewProductById,
   updateProduct,
   deleteProduct,
+  getTopSellProduct,
 } = require("../controllers/product")
 const admin = require("../middlewares/admin")
 const authorize = require("../middlewares/auth")
@@ -14,6 +15,7 @@ const router = express.Router()
 
 // normal user
 router.route("/search").post(authorize, searchProduct)
+router.route("/top-sell-product").post(authorize, getTopSellProduct)
 router.route("/:id").get(authorize, viewProductById)
 
 // admin user

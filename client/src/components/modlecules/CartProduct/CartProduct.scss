@@ -2,6 +2,7 @@
 @import "../../../sass/variables";
 .margin__cart{
   margin-top: 24px;
+
 }
 .cart__wrap {
   border-radius: 0.5rem;
@@ -28,6 +29,14 @@
     border-top: 1px solid $gray;
     & .product__name {
       font-weight: 300;
+      line-height:1.1;
+      height: 3.7rem;
+      overflow: hidden;
+      display: -webkit-box;
+      cursor: default;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
     & .mb-10 {
       margin-bottom: 1rem;

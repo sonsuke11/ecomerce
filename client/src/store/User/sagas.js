@@ -1,8 +1,11 @@
-import { takeLatest, all, call, put, takeLeading } from "redux-saga/effects"
+import { takeLatest, all, call, put } from "redux-saga/effects"
 import {
+  FORGOT_PASSWORD,
   GET_USER_BY_ID,
   GET_USER_INFO,
   LOGIN,
+  REGISTER,
+  RESET_PASSWORD,
   SEARCH_USER,
   UPDATE_USER,
 } from "../types"
@@ -79,6 +82,45 @@ function* updateUser(action) {
     }
   }
 }
+function* register(action) {
+  const { params, onSuccess, onError } = action.payload
+  try {
+    const res = yield call(api.register, params)
+    if (onSuccess) {
+      onSuccess(res?.data)
+    }
+  } catch (error) {
+    if (onError) {
+      onError(error)
+    }
+  }
+}
+function* forgotPassword(action) {
+  const { params, onSuccess, onError } = action.payload
+  try {
+    const res = yield call(api.forgotpassword, params)
+    if (onSuccess) {
+      onSuccess(res?.data)
+    }
+  } catch (error) {
+    if (onError) {
+      onError(error)
+    }
+  }
+}
+function* resetPassword(action) {
+  const { params, onSuccess, onError } = action.payload
+  try {
+    const res = yield call(api.resetPassword, params)
+    if (onSuccess) {
+      onSuccess(res?.data)
+    }
+  } catch (error) {
+    if (onError) {
+      onError(error)
+    }
+  }
+}
 export default function* settingSaga() {
   yield all([
     takeLatest(LOGIN, login),
@@ -86,5 +128,8 @@ export default function* settingSaga() {
     takeLatest(SEARCH_USER, searchUser),
     takeLatest(GET_USER_BY_ID, getUserById),
     takeLatest(UPDATE_USER, updateUser),
+    takeLatest(REGISTER, register),
+    takeLatest(RESET_PASSWORD, resetPassword),
+    takeLatest(FORGOT_PASSWORD, forgotPassword),
   ])
 }

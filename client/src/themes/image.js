@@ -28,7 +28,17 @@ const icCarretDown = `${PATH_IMG}ic_carret_down.png`
 const icTrash = `${PATH_IMG}ic_trash.png`
 const icEdit = `${PATH_IMG}ic_edit.png`
 const icPlusWhite = `${PATH_IMG}ic_plus.svg`
+const icImageUpload = `${PATH_IMG}image_upload.png`
+const icCoin = `${PATH_IMG}coin.png`
+const icNoOrder = `${PATH_IMG}ic_no_order.png`
+const icLocation = `${PATH_IMG}ic_location.png`
+const icCalenda = `${PATH_IMG}ic_calendar.png`
+
 const images = {
+  icLocation,
+  icCalenda,
+  icCoin,
+  icNoOrder,
   icEdit,
   icPlusWhite,
   icTrash,
@@ -57,5 +67,6 @@ const images = {
   icLineChart,
   icProduct,
   icList,
+  icImageUpload,
 }
 export default images

@@ -1,3 +1,4 @@
+@import "../../../sass/variables";
 .pagination {
     display: inline-block;
     cursor: pointer;
@@ -10,7 +11,7 @@
             margin-left:0.4rem;
         }
         &.active {
-            background-color: #4CAF50;
+            background-color: $primary;
             color: white;
             border-radius: 5px;
         }

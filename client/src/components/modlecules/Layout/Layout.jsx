@@ -48,7 +48,7 @@ const Layout = ({ children }) => {
     <>
       <Header userName={userData?.auth?.username} onToggle={handleToggleCart} />
       <Navbar />
-      {children}
+      <div style={{ minHeight: "60vh" }}>{children}</div>
       <Footer />
       <CartShoping show={showCart} onClose={handleCloseCart} />
     </>

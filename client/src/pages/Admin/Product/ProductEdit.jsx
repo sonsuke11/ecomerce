@@ -1,6 +1,6 @@
 import _ from "lodash"
 import React, { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import AdminLayout from "../../../components/modlecules/Admin/AdminLayout"
 import FileElement from "../../../components/modlecules/Admin/FileElement"
 import ProductCreateForm from "../../../components/modlecules/Admin/ProductCreateForm"
@@ -9,14 +9,17 @@ import useProduct from "../../../hooks/useProduct"
 const ProductEdit = () => {
   const [dataProduct, setDataProduct] = useState({ images: [null] })
 
+  const history = useNavigate()
   const { viewProductById, updateProduct } = useProduct()
   const [arrayFileElement, setArrayFileElement] = useState([FileElement])
   const [searchParams] = useSearchParams()
   const id = searchParams.get("id")
   const handleSave = () => {
     updateProduct(
-      dataProduct,
-      () => {},
+      _.omit(dataProduct, ["images"]),
+      () => {
+        history("/admin/product-list")
+      },
       () => {}
     )
   }

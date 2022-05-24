@@ -15,6 +15,13 @@ import ProductList from "./pages/Admin/Product/ProductList"
 import AddProduct from "./pages/Admin/Product/AddProduct"
 import ProductEdit from "./pages/Admin/Product/ProductEdit"
 import OrderPage from "./pages/OrderPage/OrderPage"
+import Register from "./pages/Register/Register"
+import ResetPassword from "./pages/ResetPassword/ResetPassword"
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
+import OrderList from "./pages/Admin/Order/OrderList"
+import MyAccount from "./pages/MyAccount/MyAccount"
+import MyOrder from "./pages/MyOrder/MyOrder"
+import OrderDetail from "./pages/OrderDetail/OrderDetail"
 
 export const ToastContext = createContext()
 const App = () => {
@@ -52,6 +59,7 @@ const App = () => {
               </PrivateRouter>
             }
           />
+
           <Route
             path="/order"
             element={
@@ -60,7 +68,35 @@ const App = () => {
               </PrivateRouter>
             }
           />
+          <Route
+            path="/my-account"
+            element={
+              <PrivateRouter>
+                <MyAccount />
+              </PrivateRouter>
+            }
+          />
+          <Route
+            path="/my-order"
+            element={
+              <PrivateRouter>
+                <MyOrder />
+              </PrivateRouter>
+            }
+          />
+          <Route
+            path="/detail-order"
+            element={
+              <PrivateRouter>
+                <OrderDetail />
+              </PrivateRouter>
+            }
+          />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/register" element={<Register />} />
           <Route path="admin">
             <Route
               path="dashboard"
@@ -83,6 +119,14 @@ const App = () => {
               element={
                 <AdminRoute>
                   <CategoryEdit />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="order-list"
+              element={
+                <AdminRoute>
+                  <OrderList />
                 </AdminRoute>
               }
             />

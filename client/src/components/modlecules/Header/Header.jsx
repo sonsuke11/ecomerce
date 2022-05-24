@@ -30,10 +30,14 @@ const Header = ({ userName, onToggle }) => {
       search: createSearchParams({ word: searchInput }).toString(),
     })
   }
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    history("/login")
+  }
   return (
     <header className="header__wrapper">
       <div className="header__block containter">
-        <Link to="#" className="header__logo--link">
+        <Link to="/" className="header__logo--link">
           <img src={images.logo} alt="header__logo--icon" />
         </Link>
         <div className="header__search--area">
@@ -59,15 +63,28 @@ const Header = ({ userName, onToggle }) => {
               0393230064
             </Button>
           </Link>
-          <Button variant="cicle">
-            <i className="fa-solid fa-user"></i>
-            {userName ? userName : "Login / Register"}
-          </Button>
-          <Badge qty={totalQty || 0}>
+          <Badge qty={totalQty || 0} style={{ marginLeft: -26 }}>
             <Button variant="cicle" onClick={onToggle}>
               <i className="fa-solid fa-cart-shopping"></i>
             </Button>
           </Badge>
+          <Button variant="cicle" className="header__user">
+            <i className="fa-solid fa-user"></i>
+            {userName ? userName : "Login / Register"}
+            <div className="header__user--info">
+              <ul className="user__info--list">
+                <li className="user__info--item">
+                  <Link to="/my-account">Tài khoản</Link>
+                </li>
+                <li className="user__info--item">
+                  <Link to="/my-order">Đơn hàng</Link>
+                </li>
+                <li className="user__info--item" onClick={handleLogout}>
+                  Đăng xuất
+                </li>
+              </ul>
+            </div>
+          </Button>
         </div>
       </div>
     </header>

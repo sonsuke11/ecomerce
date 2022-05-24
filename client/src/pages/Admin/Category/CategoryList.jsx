@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react"
-import { createSearchParams, useNavigate } from "react-router-dom"
-import Modal from "../../../components/atoms/Modal/Modal"
+import React, { useContext, useEffect, useState } from "react"
+import { ToastContext } from "../../../App"
 import AdminLayout from "../../../components/modlecules/Admin/AdminLayout"
 import CategoryDetailModal from "../../../components/modlecules/Admin/CategoryDetailModal"
 import CategoryTable from "../../../components/modlecules/Admin/CategoryTable"
 import useCategory from "../../../hooks/useCategory"
-import { editCategory } from "../../../store/Category/actions"
-import { APP_ROUTES } from "../../../utils/constants"
 import "./CategoryList.scss"
 
 const CategoryList = () => {
+  const { toast } = useContext(ToastContext)
   const [id, setId] = useState(null)
-  const { getAllCategory, deleteCategory } = useCategory()
+  const { getAllCategory, deleteCategory, editCategory } = useCategory()
   const [modal, setModal] = useState({
     isOpen: false,
     title: "Category Edit",
@@ -49,6 +47,17 @@ const CategoryList = () => {
     )
   }
 
+  const handleSave = (dataDetail) => {
+    editCategory(
+      dataDetail,
+      () => {
+        toast("success", "Update Succesfully")
+        setModal((prev) => ({ ...prev, isOpen: false }))
+        handleFetchCategoryData()
+      },
+      () => {}
+    )
+  }
   return (
     <>
       <AdminLayout>
@@ -67,6 +76,7 @@ const CategoryList = () => {
       <CategoryDetailModal
         isOpen={modal.isOpen}
         id={id}
+        handleSave={handleSave}
         title={modal.title}
         setModal={setModal}
       />

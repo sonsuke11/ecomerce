@@ -12,5 +12,12 @@ router.route("/get-all-city").get(authorize, orderControllers.getAllCity)
 router
   .route("/search-districts")
   .post(authorize, orderControllers.searchDistricts)
-router.route("/search").post(authorize, orderControllers.searchOrderByUser)
+router.route("/search").post(authorize, orderControllers.searchOrder)
+router
+  .route("/data-order-chart")
+  .post(authorize, orderControllers.getDataOrderForChart)
+router
+  .route("/fetch-image/:id")
+  .get(authorize, orderControllers.fetchSingleImage)
+router.route("/:id").get(authorize, orderControllers.getOrderById)
 module.exports = router

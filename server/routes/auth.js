@@ -12,6 +12,7 @@ const {
 } = require("../controllers/auth")
 const admin = require("../middlewares/admin")
 const authorize = require("../middlewares/auth")
+const upload = require("../middlewares/upload")
 
 const router = express.Router()
 router.route("/login").post(login)
@@ -19,6 +20,7 @@ router.route("/register").post(register)
 router.route("/forgotpassword").post(forgotPassword)
 router.route("/resetpassword/:resetToken").put(resetPassword)
 router.route("/user-info").get(authorize, getUserInfo)
+router.route("/").put(authorize, upload.single("avatar"), updateUser)
 
 //admin user
 router

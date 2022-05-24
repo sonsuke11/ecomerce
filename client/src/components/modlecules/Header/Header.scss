@@ -35,6 +35,59 @@
           top: 100%;
         }
       }
+      & .header__user{
+        &:hover .header__user--info{
+          display: block;
+        }
+        width:110px;
+        position: relative;
+        & .header__user--info{
+          display:none;
+          position: absolute;
+          top:calc(100% - 0.5rem);
+          right:0;
+          z-index:10;
+          background-color: $primary;
+          box-shadow: 4px 4px 10px $border-gray;
+          border-radius:$border-radius;
+          color:$white;
+          & a{
+            color:$white;
+          }
+          & .user__info--list{
+            position: relative;
+            display: block;
+            &:after {
+                content: '';
+                border-width:10px 16px;
+                border-style: solid;
+                position: absolute;
+                top:-20px;
+                right: 9px;
+                border-color:transparent transparent $primary transparent;
+              }
+            & .user__info--item{
+              border: 2px solid $primary;
+              &:first-child{
+                border-top-right-radius: $border-radius;
+                border-top-left-radius: $border-radius;
+              }
+              &:last-child{
+                border-bottom-right-radius: $border-radius;
+                border-bottom-left-radius: $border-radius;
+              }
+              &:hover{
+                background-color:$white;
+                color:$primary;
+                & a {
+                    color: $primary;
+                }
+              }
+              padding: 1.2rem 2rem;
+            }
+          }
+        }
+      }
     }
   }
 }

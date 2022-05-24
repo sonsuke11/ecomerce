@@ -1,4 +1,5 @@
 const Product = require("../models/Product")
+const Order = require("../models/Order")
 const _ = require("lodash")
 const ErrorResponse = require("../utils/errorResponse")
 const { checkIdExist } = require("../utils/helpers")
@@ -81,42 +82,99 @@ exports.viewProductById = async function (req, res, next) {
 
 exports.updateProduct = async (req, res, next) => {
   const product = req.body
+  let newProduct = { ...product }
   try {
-    const files = JSON.parse(product.images)
-    const filesWithEncode = files.map((file) => {
-      if (file?.lastModified) {
-        const img = fs.readFileSync(file.path)
-        const encodeImg = img.toString("base64")
-        return {
-          fileName: file.filename,
-          file: encodeImg,
+    if (product.images) {
+      const files = JSON.parse(product.images)
+      const filesWithEncode = files.map((file) => {
+        if (file?.lastModified) {
+          const img = fs.readFileSync(file.path)
+          const encodeImg = img.toString("base64")
+          return {
+            fileName: file.filename,
+            file: encodeImg,
+          }
         }
-      }
-      return file
-    })
+        return file
+      })
+      newProduct = { ...newProduct, images: filesWithEncode }
+    }
     const productFinedFromDB = await Product.findById(product._id)
     if (!productFinedFromDB) {
       return next(new ErrorResponse(404, "Product not found"))
     }
-    const newProduct = await Product.findByIdAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
       product._id,
-      { ...product, images: filesWithEncode },
+      {
+        ...newProduct,
+        totalRootPrice: newProduct.rootPrice * newProduct.instock,
+        updateAt: Date.now(),
+      },
       {
         new: true,
       },
       checkIdExist
     ).clone()
-    res.status(200).json({ success: true })
+    res.status(200).json({ success: true, data: updatedProduct })
   } catch (error) {
     console.log("error", error)
     next(error)
   }
 }
+
 exports.deleteProduct = async (req, res, next) => {
   const { id } = req.body
   try {
     await Product.findByIdAndDelete(id, {}, checkIdExist).clone()
     res.status(200).json({ success: true, message: "Delete successfully" })
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.getTopSellProduct = async (req, res, next) => {
+  const params = req.body
+
+  let query = [
+    { $match: { status: 4 } },
+    {
+      $lookup: {
+        from: "orderitems",
+        as: "products",
+        localField: "products",
+        foreignField: "_id",
+      },
+    },
+    {
+      $unwind: "$products",
+    },
+    {
+      $group: {
+        _id: "$products.productId",
+        quantity: { $sum: "$products.quantity" },
+        reverse: { $sum: "$totalPrice" },
+      },
+    },
+    {
+      $sort: {
+        quantity: -1,
+        resverse: 1,
+      },
+    },
+    {
+      $lookup: {
+        from: "products",
+        as: "product",
+        localField: "_id",
+        foreignField: "_id",
+      },
+    },
+    { $unwind: "$product" },
+  ]
+
+  try {
+    const topOrderList = await Order.aggregate(query)
+    res.status(200).json({ success: true, data: topOrderList })
   } catch (error) {
     next(error)
   }

@@ -7,6 +7,9 @@ export const UPDATE_PRODUCT = "@product/UPDATE_PRODUCT"
 
 //AUTH - USER
 export const LOGIN = "@@user/LOGIN"
+export const REGISTER = "@@user/REGISTER"
+export const RESET_PASSWORD = "@@user/RESET_PASSWORD"
+export const FORGOT_PASSWORD = "@@user/FORGOT_PASSWORD"
 export const GET_USER_INFO = "@@user/GET_USER_INFO"
 export const SET_USER_INFO = "@@user/SET_USER_INFO"
 export const SEARCH_USER = "@@user/SEARCH_USER"
@@ -22,6 +25,7 @@ export const HIDE_TOAST = "@@toast/HIDE_TOAST"
 export const ADD_TO_CART = "@@cart/ADD_TO_CART"
 export const VIEW_CART_BY_USER = "@@cart/VIEW_CART_BY_USER"
 export const SET_CART_DATA = "@@cart/SET_CART_DATA"
+export const DELETE_ITEMS_IN_CART = "@@cart/DELETE_ITEMS_IN_CART"
 
 //CATEGORY
 export const GET_ALL_CATEGORY = "@@cartegory/GET_ALL_CATEGORY"
@@ -34,3 +38,10 @@ export const GET_DETAIL_CATEGORY = "@@cartegory/GET_DETAIL_CATEGORY"
 // PLACE SEARCH
 export const SEARCH_ALL_CITY = "@@place/SEARCH_ALL_CITY"
 export const SEARCH_DISTRICTS = "@@place/SEACHED_DISTRICTS"
+
+// ORDER
+export const SEARCH_ORDER = "@@order/SEARCH_ORDER"
+export const UPDATE_ORDER = "@@order/UPDATE_ORDER"
+export const CREATE_ORDER = "@@order/CREATE_ORDER"
+export const GET_ORDER_BY_ID = "@@order/GET_ORDER_BY_ID"
+export const GET_ORDER_EVERY_DAY = "@@order/GET_ORDER_EVERY_DAY"

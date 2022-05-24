@@ -36,10 +36,7 @@ const CategoryEdit = () => {
       errors.name = "Name is required"
       flag = false
     }
-    if (!detailData?.path?.trim()) {
-      errors.path = "Path is required"
-      flag = false
-    }
+
     setValidateError(errors)
     return flag
   }

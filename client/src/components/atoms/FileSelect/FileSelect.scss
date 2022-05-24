@@ -1,12 +1,9 @@
 @import "../../../sass/variables";
-.file_image{
-    width:200px;
-    height:200px;
+
+.file__input {
+  display:none;
 }
-.file__input{
-    height: 2rem;
-    display: block;
-}
+
 .input__error--text{
     color: $danger;
     font-size: 1.3rem;

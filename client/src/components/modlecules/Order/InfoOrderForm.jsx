@@ -1,32 +1,95 @@
 import React from "react"
+import styled from "styled-components"
+import useCart from "../../../hooks/useCart"
+import { ShipPrice } from "../../../utils/constants"
+import { formatCurrent } from "../../../utils/helpers"
 import Input from "../../atoms/Input/Input"
-import Select from "../../atoms/Select/Select"
+import "./InfoOrderForm.scss"
 
-const InfoOrderForm = ({ dataOrder, setDataOrder, cites }) => {
+const InfoOrderForm = ({ dataOrder, setDataOrder, onSave }) => {
+  const { cartData } = useCart()
+  const caculateTotalPrice = () => {
+    const caculatePriceOneProduct = (product) => {
+      return product?.product?.price * product?.qty
+    }
+    const totalPrice = cartData?.data?.productsOfCart?.reduce(
+      (prev, curr) => prev + caculatePriceOneProduct(curr),
+      0
+    )
+    return totalPrice ?? 0
+  }
+  const totalPrice = caculateTotalPrice()
+
+  const totalPayment = totalPrice + ShipPrice
   return (
-    <div className="col c-6">
-      <div className="order__block">
-        <h1 className="order__title">Thông tin giao hàng</h1>
-        <Input placeholder="Họ và Tên" />
-        <div className="row sm-gutter">
-          <div className="col c-8">
-            <Input placeholder="Email" />
+    <>
+      <h1 className=" col c-12 order__title">Thông tin giao hàng</h1>
+      <div className="col c-8">
+        <div className="order__block">
+          <Input
+            placeholder="Họ và Tên"
+            value={dataOrder?.name}
+            onChange={(value) => setDataOrder({ ...dataOrder, name: value })}
+          />
+          <br />
+          <div className="row sm-gutter">
+            <div className="col c-8">
+              <Input
+                placeholder="Email"
+                value={dataOrder?.email}
+                onChange={(value) =>
+                  setDataOrder({ ...dataOrder, email: value })
+                }
+              />
+            </div>
+            <div className="col c-4">
+              <Input
+                placeholder="Số điện thoại"
+                value={dataOrder?.phone}
+                onChange={(value) =>
+                  setDataOrder({ ...dataOrder, phone: value })
+                }
+              />
+            </div>
           </div>
-          <div className="col c-4">
-            <Input placeholder="Số điện thoại" />
-          </div>
+          <br />
+          <Input
+            placeholder="Địa chỉ"
+            value={dataOrder?.address}
+            onChange={(value) => setDataOrder({ ...dataOrder, address: value })}
+          />
         </div>
-        <Input placeholder="Địa chỉ" />
-        <Select
-          options={cites}
-          value={cites.find((city) => city.value === dataOrder?.city)}
-          onChange={(select) =>
-            setDataOrder({ ...dataOrder, city: select?.value })
-          }
-        />
       </div>
-    </div>
+      <div
+        className="col c-4"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+        }}
+      >
+        <ContentCurrency>
+          <p>Tổng tiền hàng</p>
+          <p>{formatCurrent(totalPrice)}</p>
+        </ContentCurrency>
+        <ContentCurrency>
+          <p>Tổng tiền hàng</p>
+          <p>{formatCurrent(ShipPrice)}</p>
+        </ContentCurrency>
+        <ContentCurrency>
+          <p>Tổng tiền hàng</p>
+          <p>{formatCurrent(totalPayment)}</p>
+        </ContentCurrency>
+      </div>
+    </>
   )
 }
 
 export default InfoOrderForm
+
+const ContentCurrency = styled.div`
+  display: flex;
+  align-items: center;
+  height: 42px;
+  justify-content: space-between;
+`

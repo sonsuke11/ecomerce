@@ -42,10 +42,6 @@ const UserList = () => {
     setModal({ ...modal, isOpen: true })
   }
 
-  const handleDeleteClick = (params) => {
-    // handle delete user
-  }
-
   const handleChangePageClick = (page) => {
     // handle change page
     fetchUserData({ page })
@@ -81,7 +77,6 @@ const UserList = () => {
         <UserTable
           listData={userData?.userList}
           handleEdit={handleEditClick}
-          handleDelete={handleDeleteClick}
           onChangePage={handleChangePageClick}
         />
       </AdminLayout>

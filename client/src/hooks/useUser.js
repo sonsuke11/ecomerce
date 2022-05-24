@@ -19,6 +19,25 @@ const useUser = () => {
   const updateUser = (params, onSuccess, onError) => {
     return dispatch(actions.updateUser({ params, updateUser, onSuccess }))
   }
-  return { login, getUserInfo, userData, searchUser, getUserById, updateUser }
+  const register = (params, onSuccess, onError) => {
+    return dispatch(actions.register({ params, onSuccess, onError }))
+  }
+  const forgotPassword = (params, onSuccess, onError) => {
+    return dispatch(actions.forgotPassword({ params, onSuccess, onError }))
+  }
+  const resetPassword = (params, onSuccess, onError) => {
+    return dispatch(actions.resetPassword({ params, onSuccess, onError }))
+  }
+  return {
+    forgotPassword,
+    login,
+    register,
+    getUserInfo,
+    userData,
+    searchUser,
+    getUserById,
+    updateUser,
+    resetPassword,
+  }
 }
 export default useUser
