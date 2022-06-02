@@ -10,11 +10,13 @@ import InfoTabBar from "../../components/modlecules/InfoForm/InfoTabBar"
 import Layout from "../../components/modlecules/Layout/Layout"
 import OrderHistoryList from "../../components/modlecules/MyOrder/OrderHistoryList"
 import TabLink from "../../components/modlecules/MyOrder/TabLink"
+import EvaluateModal from "../../components/modlecules/MyOrder/EvaluateModal"
 import useOrder from "../../hooks/useOrder"
 import images from "../../themes/image"
 
 const MyOrder = () => {
   const [order, setOrder] = useState()
+
   const { searchOrder, updateOrder } = useOrder()
   const [searchParams] = useSearchParams()
   const status = searchParams.get("status")
@@ -66,12 +68,22 @@ const MyOrder = () => {
     })
   }
 
+  const handleClickReBuy = (id) => {
+    history({
+      pathname: "/order",
+      search: createSearchParams({
+        id,
+      }).toString(),
+    })
+  }
+
   useEffect(() => {
     handleSearch({ status: Number(status) })
   }, [status])
 
   return (
     <Layout>
+      <br />
       <br />
       <div className="grid wide">
         <div className="row">
@@ -95,14 +107,16 @@ const MyOrder = () => {
             {order?.list?.length > 0 &&
               order?.list?.map((item) => (
                 <OrderHistoryList
-                  data={item}
+                  onClickReBuy={handleClickReBuy}
                   onCancelOrder={handleCancelOrder}
+                  data={item}
                   onDetailOrderClick={handleDetailOrderClick}
                 />
               ))}
           </div>
         </div>
       </div>
+      <br />
       <br />
     </Layout>
   )
@@ -120,6 +134,7 @@ const NoOrder = styled.div`
 `
 
 const WrapNoOrder = styled.div`
+  box-shadow: 4px 4px 10px #ccc;
   width: 100%;
   height: 80vh;
   display: flex;

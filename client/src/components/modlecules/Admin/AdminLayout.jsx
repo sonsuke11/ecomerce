@@ -7,7 +7,7 @@ const AdminLayout = ({ children }) => {
     <div className="grid">
       <div className="row">
         <Nav />
-        <div className="col c-10 admin__body">{children}</div>
+        <div className="col c-9 admin__body">{children}</div>
       </div>
     </div>
   )

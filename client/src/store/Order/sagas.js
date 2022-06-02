@@ -3,6 +3,7 @@ import {
   CREATE_ORDER,
   GET_ORDER_BY_ID,
   GET_ORDER_EVERY_DAY,
+  SEARCH_ALL_ORDER,
   SEARCH_ORDER,
   UPDATE_ORDER,
 } from "../types"
@@ -75,6 +76,19 @@ function* getDataOrderEveryDay(action) {
     }
   }
 }
+function* searchAllOrder(action) {
+  const { params, onSuccess, onError } = action.payload
+  try {
+    const res = yield call(api.searchAllOrder, params)
+    if (onSuccess) {
+      onSuccess(res?.data)
+    }
+  } catch (error) {
+    if (onError) {
+      onError(error)
+    }
+  }
+}
 
 export default function* settingSaga() {
   yield all([
@@ -83,5 +97,6 @@ export default function* settingSaga() {
     takeLatest(CREATE_ORDER, createOrder),
     takeLatest(GET_ORDER_BY_ID, getOrderById),
     takeLatest(GET_ORDER_EVERY_DAY, getDataOrderEveryDay),
+    takeLatest(SEARCH_ALL_ORDER, searchAllOrder),
   ])
 }

@@ -32,11 +32,11 @@ const CategoryTable = ({ handleEdit, handleDelete, onChangePage }) => {
                   alt=""
                   onClick={() => handleEdit(item._id)}
                 />
-                <img
+                {/* <img
                   src={images.icTrash}
                   alt=""
                   onClick={() => handleDelete(item._id)}
-                />
+                /> */}
               </td>
             </tr>
           ))}

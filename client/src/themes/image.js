@@ -33,8 +33,20 @@ const icCoin = `${PATH_IMG}coin.png`
 const icNoOrder = `${PATH_IMG}ic_no_order.png`
 const icLocation = `${PATH_IMG}ic_location.png`
 const icCalenda = `${PATH_IMG}ic_calendar.png`
+const icLikeFill = `${PATH_IMG}ic_like_fill.png`
+const icLikeRouned = `${PATH_IMG}ic_like_rounded.png`
+const icNoEvaludated = `${PATH_IMG}ic_no_evaluated.png`
+const icBanner1 = `${PATH_IMG}banner1.png`
+const icBanner2 = `${PATH_IMG}banner2.png`
+const icBanner3 = `${PATH_IMG}banner3.png`
 
 const images = {
+  icBanner1,
+  icBanner2,
+  icBanner3,
+  icNoEvaludated,
+  icLikeFill,
+  icLikeRouned,
   icLocation,
   icCalenda,
   icCoin,

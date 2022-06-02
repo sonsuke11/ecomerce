@@ -11,6 +11,10 @@ const OrderItem = mongoose.Schema(
       type: Number,
       required: [true, "Must provide a quantity"],
     },
+    isEvaluated: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: { createdAt: "createdAt", updateAt: "updateAt" } }
 )

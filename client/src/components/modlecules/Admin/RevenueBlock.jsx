@@ -2,12 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { formatCurrent, formatNumber } from "../../../utils/helpers"
 
-const RevenueBlock = ({
-  totalSold,
-  totalRootPrice,
-  totalRevenue,
-  totalBendfit,
-}) => {
+const RevenueBlock = ({ totalSold, totalRootPrice, totalRevenue }) => {
   return (
     <Wrap>
       <Column>

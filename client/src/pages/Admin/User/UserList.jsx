@@ -15,6 +15,7 @@ const UserList = () => {
   })
   const [dataDetail, setDataDetail] = useState({})
   const [id, setId] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
   useEffect(() => {
     if (id) {
       getUserById(
@@ -29,12 +30,14 @@ const UserList = () => {
   const fetchUserData = (params) => {
     searchUser(
       params,
-      () => {},
+      () => {
+        setCurrentPage(params.page)
+      },
       () => {}
     )
   }
   useEffect(() => {
-    fetchUserData({ page: 1 })
+    fetchUserData({ page: currentPage })
   }, [])
 
   const handleEditClick = (param) => {
@@ -47,11 +50,12 @@ const UserList = () => {
     fetchUserData({ page })
   }
 
-  const handleSave = (params) => {
+  const handleSave = () => {
     // handle save
     updateUser(dataDetail, () => {
       toast("success", "User updated")
       handleCloseModal()
+      fetchUserData({ page: currentPage })
     })
   }
 
@@ -69,8 +73,7 @@ const UserList = () => {
     <>
       <AdminLayout>
         <div className="title__block">
-          <h4>User List</h4>
-          <p>Wellcome to Admin User List</p>
+          <h4>Danh sách danh mục</h4>
         </div>
         <br />
         <br />

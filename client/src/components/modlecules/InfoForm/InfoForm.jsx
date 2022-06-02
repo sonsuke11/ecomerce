@@ -24,6 +24,7 @@ const InfoForm = ({ user, setUser, onSaveUser }) => {
             placeholder="Email"
             label="Email"
             value={user?.email}
+            disabled
             onChange={(value) => setUser({ ...user, email: value })}
           />
           <br />
@@ -77,6 +78,7 @@ const Wrap = styled.div`
   padding: 2rem;
   border-radius: 0.5rem;
   background-color: white;
+  box-shadow: 4px 4px 10px #ccc;
 `
 const Title = styled.h2`
   font-size: 2rem;

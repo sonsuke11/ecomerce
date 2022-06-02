@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-
 const Product = mongoose.Schema(
   {
     name: {
@@ -9,7 +8,6 @@ const Product = mongoose.Schema(
     },
     instock: {
       type: Number,
-      default: 1,
     },
     images: {
       type: [mongoose.Schema.Types.ObjectId],
@@ -21,7 +19,6 @@ const Product = mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
     },
     price: {
       type: Number,
@@ -35,8 +32,14 @@ const Product = mongoose.Schema(
       type: Number,
     },
     rank: {
-      type: Number,
+      type: mongoose.Types.Decimal128,
       default: 0,
+      get: (value) => {
+        if (value) {
+          return parseFloat(value?.toString())
+        }
+        return 0
+      },
     },
     numOfViews: {
       type: Number,
@@ -46,8 +49,18 @@ const Product = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
     },
+    visible: {
+      type: Boolean,
+      default: true,
+    },
   },
-  { timestamps: { createdAt: "createdAt", updateAt: "updateAt" } }
+  {
+    toJSON: { getters: true },
+    timestamps: {
+      createdAt: "createdAt",
+      updateAt: "updateAt",
+    },
+  }
 )
 
 const arrayLimit = (val, limit) => {

@@ -1,9 +1,9 @@
 import { SET_CART_DATA } from "../types"
 
-const cartReducer = (state = {}, action) => {
+const cartReducer = (state = [], action) => {
   switch (action?.type) {
     case SET_CART_DATA:
-      return { ...state, ...action?.payload }
+      return action?.payload?.params
     default:
       return state
   }

@@ -13,7 +13,7 @@ const createProduct = (params) => {
   const formData = new FormData()
   Object.keys(params).forEach((key) => {
     if (key === "images") {
-      params[key].forEach((i) => {
+      params[key]?.forEach((i) => {
         formData.append(key, i)
       })
     } else {
@@ -24,6 +24,12 @@ const createProduct = (params) => {
 }
 const deleteProduct = (id) => {
   return api.delete("/product", { data: { id } })
+}
+const getBoughtProduct = (params) => {
+  return api.post("/product/bought", params)
+}
+const getTopSellProduct = (params) => {
+  return api.post("/product/top-sell-product", params)
 }
 const updateProduct = (params) => {
   const formData = new FormData()
@@ -48,5 +54,7 @@ const productApi = {
   viewProductById,
   createProduct,
   deleteProduct,
+  getBoughtProduct,
+  getTopSellProduct,
 }
 export default productApi

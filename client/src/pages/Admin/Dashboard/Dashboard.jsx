@@ -8,17 +8,16 @@ import useOrder from "../../../hooks/useOrder"
 
 const Dashboard = () => {
   const defaultSearch = {
-    startDate: moment().subtract(30, "days").format("yyyy-MM-DD"),
-    _id: "628bdff90d898aa268330bca",
+    startDate: moment().subtract(3, "days").format("yyyy-MM-DD"),
   }
-  const { searchOrder } = useOrder()
+  const { searchAllOrder } = useOrder()
 
   const [paramsSearch, setParamsSearch] = useState(defaultSearch)
   const [dataOrder, setDataOrder] = useState()
 
   const calcTotalSold = () => {
     const calcOneOrder = (products) => {
-      return products.reduce((prev, curr) => prev + curr.quantity, 0)
+      return products?.reduce((prev, curr) => prev + curr?.quantity, 0)
     }
     return dataOrder?.list?.reduce(
       (prev, curr) => prev + calcOneOrder(curr?.products),
@@ -27,15 +26,15 @@ const Dashboard = () => {
   }
   const calcTotalRevenue = () => {
     return dataOrder?.list?.reduce(
-      (prev, curr) => prev + Number(curr.totalPrice),
+      (prev, curr) => prev + Number(curr?.totalPrice),
       0
     )
   }
 
   const calcTotalRootPrice = () => {
     const calcOneOrder = (products) => {
-      return products.reduce(
-        (prev, curr) => prev + curr.productId.rootPrice * curr.quantity,
+      return products?.reduce(
+        (prev, curr) => prev + curr?.productId?.rootPrice * curr?.quantity,
         0
       )
     }
@@ -47,7 +46,7 @@ const Dashboard = () => {
   const handleSearch = (params) => {
     const search = { ...paramsSearch, ...params }
 
-    searchOrder(
+    searchAllOrder(
       search,
       (res) => {
         setParamsSearch(search)

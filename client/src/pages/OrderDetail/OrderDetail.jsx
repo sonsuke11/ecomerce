@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import styled from "styled-components"
-import Button from "../../components/atoms/Button/Button"
+// import Button from "../../components/atoms/Button/Button"
 import Layout from "../../components/modlecules/Layout/Layout"
 import OrderProductDetail from "../../components/modlecules/OrderDetail/OrderProductDetail"
 import PaymentDetail from "../../components/modlecules/OrderDetail/PaymentDetail"
@@ -26,7 +26,6 @@ const OrderDetail = () => {
       }
     )
   }
-  console.log("dataDetail", dataDetail)
   useEffect(() => {
     handleFetchDetail()
   }, [])
@@ -69,7 +68,7 @@ const OrderDetail = () => {
                     </div>
                     <div>{dataDetail?.address}</div>
                   </Address>
-                  <Button variant="outline">Thay đổi</Button>
+                  {/* <Button variant="outline">Thay đổi</Button> */}
                 </Block>
               </AddressWrap>
             </div>

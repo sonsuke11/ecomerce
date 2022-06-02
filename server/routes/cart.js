@@ -9,4 +9,5 @@ router
   .post(authorize, cartController.addToCart)
   .get(authorize, cartController.viewCart)
   .delete(authorize, cartController.deleteCartItem)
+  .put(authorize, cartController.updateCartItem)
 module.exports = router

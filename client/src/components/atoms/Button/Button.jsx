@@ -8,11 +8,17 @@ const Button = ({
   className,
   onClick,
   icon,
+  disabled,
   ...props
 }) => {
   const classNames = ["button__group", className, variant].join(" ")
   return (
-    <button className={classNames} onClick={onClick} {...props}>
+    <button
+      disabled={disabled}
+      className={classNames}
+      onClick={onClick}
+      {...props}
+    >
       {icon && <Icon icon={icon} className="button__icon" />}
       &nbsp;
       {children}

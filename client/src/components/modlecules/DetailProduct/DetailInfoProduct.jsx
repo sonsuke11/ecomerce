@@ -9,7 +9,7 @@ const DetailInfoProduct = ({ product, onAddToCartClick }) => {
   const [orderNumber, setOrderNumber] = useState(1)
   const arrRank = new Array(5)
     .fill(0)
-    .map((i, index) => (index <= product?.rank ? 1 : i))
+    .map((i, index) => (index + 1 <= product?.rank ? 1 : i))
   const renderRank = () => {
     return arrRank.map((item, index) =>
       item === 0 ? (
@@ -28,6 +28,16 @@ const DetailInfoProduct = ({ product, onAddToCartClick }) => {
     )
   }
 
+  const validate = () => {
+    let error = ""
+    let flag = true
+    if (!orderNumber || orderNumber > 10) {
+      error = "Số lượng đặt phải lớn hơn 0 và nhỏ hơn 10."
+      alert(error)
+      flag = false
+    }
+    return flag
+  }
   return (
     <>
       <div
@@ -59,12 +69,23 @@ const DetailInfoProduct = ({ product, onAddToCartClick }) => {
             <input
               type="number"
               value={orderNumber}
-              onChange={(e) => setOrderNumber(parseInt(e.target.value))}
+              onChange={(e) => {
+                setOrderNumber(parseInt(e.target.value))
+              }}
             />
-            <span onClick={() => setOrderNumber(orderNumber + 1)}>+</span>
+            <span
+              onClick={() => {
+                if (orderNumber < 11) setOrderNumber(orderNumber + 1)
+              }}
+            >
+              +
+            </span>
           </div>
           <Button
-            onClick={() => onAddToCartClick({ ...product, qty: orderNumber })}
+            disabled={product.instock <= 0}
+            onClick={() => {
+              if (validate()) onAddToCartClick({ ...product, qty: orderNumber })
+            }}
           >
             Thêm vào giỏ hàng
           </Button>

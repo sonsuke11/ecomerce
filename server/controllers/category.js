@@ -3,6 +3,7 @@ const ErrorResponse = require("../utils/errorResponse")
 
 exports.getAllCategories = async (req, res, next) => {
   const { page, size } = req.body
+
   try {
     const categoryList = await Category.find({})
 

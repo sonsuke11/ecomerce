@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { createSearchParams, Link, useNavigate } from "react-router-dom"
 import useCart from "../../../hooks/useCart"
+import useUser from "../../../hooks/useUser"
 
 import images from "../../../themes/image"
 import Badge from "../../atoms/Badge/Badge"
@@ -11,29 +12,33 @@ import "./Header.scss"
 
 const Header = ({ userName, onToggle }) => {
   const { cartData } = useCart()
+  const { logout } = useUser()
   const [totalQty, setTotalQty] = useState(0)
   const [searchInput, setSearchInput] = useState("")
   const history = useNavigate()
+
   const cartQuantity = () => {
-    const caclTotal = cartData?.data?.productsOfCart?.reduce(
-      (prev, curr) => prev + curr.qty,
-      0
-    )
+    const caclTotal = cartData?.reduce((prev, curr) => prev + curr.qty, 0)
     setTotalQty(caclTotal)
   }
+
   useEffect(() => {
     cartQuantity()
   }, [cartData])
+
   const handleSearch = () => {
     history({
       pathname: "/search",
       search: createSearchParams({ word: searchInput }).toString(),
     })
   }
+
   const handleLogout = () => {
     localStorage.removeItem("user")
+    logout()
     history("/login")
   }
+
   return (
     <header className="header__wrapper">
       <div className="header__block containter">
@@ -70,20 +75,29 @@ const Header = ({ userName, onToggle }) => {
           </Badge>
           <Button variant="cicle" className="header__user">
             <i className="fa-solid fa-user"></i>
-            {userName ? userName : "Login / Register"}
-            <div className="header__user--info">
-              <ul className="user__info--list">
-                <li className="user__info--item">
-                  <Link to="/my-account">Tài khoản</Link>
-                </li>
-                <li className="user__info--item">
-                  <Link to="/my-order">Đơn hàng</Link>
-                </li>
-                <li className="user__info--item" onClick={handleLogout}>
-                  Đăng xuất
-                </li>
-              </ul>
-            </div>
+            {userName ? (
+              userName
+            ) : (
+              <p onClick={() => history("/login")}>Login / Register</p>
+            )}
+            {userName && (
+              <div className="header__user--info">
+                <ul className="user__info--list">
+                  <li className="user__info--item">
+                    <Link to="/my-account">Tài khoản</Link>
+                  </li>
+                  <li className="user__info--item">
+                    <Link to="/my-order">Đơn hàng</Link>
+                  </li>
+                  <li className="user__info--item">
+                    <Link to="/evaluate-product">Đánh giá sản phẩm</Link>
+                  </li>
+                  <li className="user__info--item" onClick={handleLogout}>
+                    Đăng xuất
+                  </li>
+                </ul>
+              </div>
+            )}
           </Button>
         </div>
       </div>

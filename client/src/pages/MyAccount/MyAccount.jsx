@@ -9,15 +9,22 @@ import _ from "lodash"
 const MyAccount = () => {
   const [user, setUser] = useState()
   const { toast } = useContext(ToastContext)
-  const { updateUser, userData } = useUser()
+  const { updateInfo, userData, getUserInfo } = useUser()
 
   const handleSaveUser = () => {
-    updateUser(
+    updateInfo(
       _.omit(user, ["fileBase64"]),
-      () => toast("success", "Cập nhật tài khoản thành công"),
       () => {
-        // do nothing
-      }
+        toast("success", "Cập nhật tài khoản thành công")
+        refreshUserData()
+      },
+      () => {}
+    )
+  }
+  const refreshUserData = () => {
+    getUserInfo(
+      () => {},
+      () => {}
     )
   }
 
@@ -28,6 +35,7 @@ const MyAccount = () => {
   }, [userData?.auth])
   return (
     <Layout>
+      <br />
       <br />
       <div className="grid wide">
         <div className="row">
@@ -43,6 +51,7 @@ const MyAccount = () => {
           </div>
         </div>
       </div>
+      <br />
       <br />
     </Layout>
   )

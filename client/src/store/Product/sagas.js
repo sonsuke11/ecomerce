@@ -3,6 +3,8 @@ import api from "../../services/Product/api"
 import {
   CREATE_PRODUCT,
   DELETE_PRODUCT,
+  GET_PRODUCT_BOUGHT,
+  GET_TOP_SELL_PRODUCT,
   SEARCH_PRODUCT,
   UPDATE_PRODUCT,
   VIEW_PRODUCT_BY_ID,
@@ -69,6 +71,32 @@ function* updateProduct(action) {
     }
   }
 }
+function* getProductBought(action) {
+  const { params, onSuccess, onError } = action.payload
+  try {
+    const res = yield call(api.getBoughtProduct, params)
+    if (onSuccess) {
+      onSuccess(res?.data)
+    }
+  } catch (error) {
+    if (onError) {
+      onError(error)
+    }
+  }
+}
+function* getTopSellProduct(action) {
+  const { onSuccess, onError } = action.payload
+  try {
+    const res = yield call(api.getTopSellProduct)
+    if (onSuccess) {
+      onSuccess(res?.data)
+    }
+  } catch (error) {
+    if (onError) {
+      onError(error)
+    }
+  }
+}
 
 export default function* settingSaga() {
   yield all([
@@ -77,5 +105,7 @@ export default function* settingSaga() {
     takeLatest(CREATE_PRODUCT, createProduct),
     takeLatest(DELETE_PRODUCT, deleteProduct),
     takeLatest(UPDATE_PRODUCT, updateProduct),
+    takeLatest(GET_PRODUCT_BOUGHT, getProductBought),
+    takeLatest(GET_TOP_SELL_PRODUCT, getTopSellProduct),
   ])
 }

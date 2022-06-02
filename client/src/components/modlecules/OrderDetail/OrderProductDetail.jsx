@@ -1,8 +1,10 @@
 import React from "react"
 import styled from "styled-components"
+import { useNavigate, createSearchParams } from "react-router-dom"
 import { formatCurrent } from "../../../utils/helpers"
 
 const OrderProductDetail = ({ data }) => {
+  const history = useNavigate()
   return (
     <Wrap className="col c-12">
       <Title>Sản phẩm</Title>
@@ -16,7 +18,17 @@ const OrderProductDetail = ({ data }) => {
         {data?.products?.map((product) => (
           <tr>
             <Td>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{ display: "flex", alignItems: "center" }}
+                onClick={() =>
+                  history({
+                    pathname: "/detail",
+                    search: createSearchParams({
+                      id: product.productId._id,
+                    }).toString(),
+                  })
+                }
+              >
                 <Img
                   src={`data:image/png;base64,${product.productId.images[0].file}`}
                   alt="product"

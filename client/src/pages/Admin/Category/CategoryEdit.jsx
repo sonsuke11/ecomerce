@@ -33,7 +33,7 @@ const CategoryEdit = () => {
     const errors = {}
     let flag = true
     if (!detailData?.name?.trim()) {
-      errors.name = "Name is required"
+      errors.name = "Vui lòng không để trống trường này"
       flag = false
     }
 
@@ -69,8 +69,7 @@ const CategoryEdit = () => {
   return (
     <AdminLayout>
       <div className="title__block">
-        <h4>Category Edit</h4>
-        <p>Wellcome to Admin Category Edit </p>
+        <h4>Thêm mới sản phẩm</h4>
       </div>
       <br />
       <br />

@@ -7,6 +7,9 @@ const useUser = () => {
   const login = (params, onSuccess, onError) => {
     return dispatch(actions.login({ params, onSuccess, onError }))
   }
+  const logout = (onSuccess, onError) => {
+    return dispatch(actions.logout({ onSuccess, onError }))
+  }
   const getUserInfo = (onSuccess, onError) => {
     return dispatch(actions.getUserInfo({ onSuccess, onError }))
   }
@@ -18,6 +21,9 @@ const useUser = () => {
   }
   const updateUser = (params, onSuccess, onError) => {
     return dispatch(actions.updateUser({ params, updateUser, onSuccess }))
+  }
+  const updateInfo = (params, onSuccess, onError) => {
+    return dispatch(actions.updateInfo({ params, updateUser, onSuccess }))
   }
   const register = (params, onSuccess, onError) => {
     return dispatch(actions.register({ params, onSuccess, onError }))
@@ -38,6 +44,8 @@ const useUser = () => {
     getUserById,
     updateUser,
     resetPassword,
+    logout,
+    updateInfo,
   }
 }
 export default useUser

@@ -1,16 +1,19 @@
-import React from "react"
+import React, { memo } from "react"
 import FileSelect from "../../atoms/FileSelect/FileSelect"
 
 const FileElement = ({ file, setFile, fileBase64 }) => {
   return (
-    <FileSelect
-      required
-      file={file}
-      onChange={(value) => {
-        setFile(value)
-      }}
-    />
+    <div className="col c-6">
+      <FileSelect
+        required
+        displayFile="top"
+        file={file}
+        onChange={(value) => {
+          setFile(value)
+        }}
+      />
+    </div>
   )
 }
 
-export default FileElement
+export default memo(FileElement)

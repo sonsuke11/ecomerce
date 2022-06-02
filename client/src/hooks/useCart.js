@@ -4,16 +4,21 @@ const useCart = () => {
   const dispatch = useDispatch()
   const cartData = useSelector((state) => state.cartData)
 
-  const viewCartByUser = (onSuccess, onError) => {
-    return dispatch(actions.viewCartByUser({ onSuccess, onError }))
+  const setCartDataToStore = (params, onSuccess, onError) => {
+    return dispatch(actions.setCartDataToStore({ params, onSuccess, onError }))
   }
-  const addToCart = (params, onSuccess, onError) => {
-    return dispatch(actions.addToCart({ params, onSuccess, onError }))
+  const deleteItemsInCart = (params) => {
+    return dispatch(actions.deleteItemsInCart({ params }))
   }
-  const deleteItemsInCart = (params, onSuccess, onError) => {
-    return dispatch(actions.deleteItemsInCart({ params, onSuccess, onError }))
+  const updateCartItems = (params) => {
+    return dispatch(actions.updateCartItems({ params }))
   }
-  return { viewCartByUser, addToCart, cartData, deleteItemsInCart }
+  return {
+    setCartDataToStore,
+    cartData,
+    deleteItemsInCart,
+    updateCartItems,
+  }
 }
 
 export default useCart

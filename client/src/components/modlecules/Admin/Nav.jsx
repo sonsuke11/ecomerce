@@ -1,66 +1,87 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import useUser from "../../../hooks/useUser"
 import images from "../../../themes/image"
 import "./Nav.scss"
 import NavItem from "./NavItem"
 
 const Nav = () => {
+  const { userData, logout } = useUser()
   const navList = [
     {
       icon: images.icLineChart,
-      title: "DashBoard",
+      title: "Thống kê",
       path: "/admin/dashboard",
     },
     {
       icon: images.icList,
-      title: "Category",
+      title: "Danh mục",
       child: [
         {
           path: "/admin/category-list",
-          content: "Category List",
+          content: "Bảng danh mục",
         },
         {
           path: "/admin/category-create",
-          content: "Add Category",
+          content: "Tạo danh mục",
         },
       ],
     },
     {
       icon: images.icUser,
-      title: "User",
+      title: "Người dùng",
       child: [
         {
           path: "/admin/user-list",
-          content: "User List",
+          content: "Danh sách người dùng",
         },
       ],
     },
     {
       icon: images.icProduct,
-      title: "Product",
+      title: "Sản phẩm ",
       child: [
         {
           path: "/admin/product-list",
-          content: "Product List",
+          content: "Danh sách sản phẩm",
         },
         {
           path: "/admin/product-create",
-          content: "Add Product",
+          content: "Tạo sản phẩm",
         },
       ],
     },
     {
       icon: images.icProduct,
-      title: "Order",
+      title: "Đơn hàng",
       child: [
         {
           path: "/admin/order-list",
-          content: "Product List",
+          content: "Danh sách đơn hàng",
         },
+        // {
+        //   path: "/admin/product-create",
+        //   content: "Add Product",
+        // },
+      ],
+    },
+    {
+      title: userData?.auth?.username,
+      avatar: userData?.auth?.avatar,
+
+      child: [
         {
-          path: "/admin/product-create",
-          content: "Add Product",
+          path: "/login",
+          content: "Đăng xuất",
+          onClick: () => {
+            localStorage.removeItem("user")
+            logout()
+          },
         },
+        // {
+        //   path: "/admin/product-create",
+        //   content: "Add Product",
+        // },
       ],
     },
   ]
@@ -74,10 +95,19 @@ const Nav = () => {
           <img src={images.logo} alt="logo" />
         </div>
         {navList.map((nav) => (
-          <NavItem icon={nav.icon} title={nav.title} path={nav.path}>
+          <NavItem
+            avatar={nav?.avatar}
+            icon={nav?.icon}
+            title={nav.title}
+            path={nav.path}
+          >
             {nav?.child?.length > 0 &&
               nav.child.map((item) => (
-                <Link to={item.path} className="nav__link--item">
+                <Link
+                  to={item.path}
+                  className="nav__link--item"
+                  onClick={item?.onClick}
+                >
                   {item.content}
                 </Link>
               ))}

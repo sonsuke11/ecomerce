@@ -33,7 +33,7 @@ const getUserById = (id) => {
   return api.get("/auth/" + id)
 }
 
-const updateUser = (params) => {
+const updateInfo = (params) => {
   const formData = new FormData()
   Object.keys(params).forEach((key) => {
     if (key === "avatar" && params["isChangeFile"]) {
@@ -42,7 +42,11 @@ const updateUser = (params) => {
       formData.append(key, params[key])
     }
   })
-  return api.put("/auth", formData, config)
+  return api.put("/auth/update-info", formData, config)
+}
+
+const updateUser = (params) => {
+  return api.put("/auth", params)
 }
 
 const userApi = {
@@ -54,6 +58,7 @@ const userApi = {
   register,
   forgotpassword,
   resetPassword,
+  updateInfo,
 }
 
 export default userApi

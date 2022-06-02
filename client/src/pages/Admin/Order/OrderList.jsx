@@ -22,7 +22,7 @@ const OrderList = () => {
       () => {}
     )
   }
-  console.log("dataOrder", dataOrder)
+
   useEffect(() => {
     fetchOrder()
   }, [])
@@ -32,7 +32,17 @@ const OrderList = () => {
   }
   return (
     <AdminLayout>
-      <OrderTable data={dataOrder} onChangePage={handleChangePage} />
+      <div className="title__block">
+        <h4>Danh sách đơn hàng</h4>
+        {/* <p>Wellcome to Create Product Page </p> */}
+      </div>
+      <br />
+      <br />
+      <OrderTable
+        data={dataOrder}
+        onChangePage={handleChangePage}
+        fetchOrder={fetchOrder}
+      />
     </AdminLayout>
   )
 }

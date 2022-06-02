@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { memo, useRef } from "react"
 import styled from "styled-components"
 import images from "../../../themes/image"
 import Button from "../Button/Button"
@@ -79,13 +79,13 @@ const FileSelect = ({
   )
 }
 
-export default FileSelect
+export default memo(FileSelect)
 
 const ImageSelected = styled.div`
+  background-size: contain;
   width: 20rem;
   padding-top: 20rem;
   background-repeat: no-repeat;
-  background-size: cover;
   background-position: center;
   border: 1px solid #ccc;
 `

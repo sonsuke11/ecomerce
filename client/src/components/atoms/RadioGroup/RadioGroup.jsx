@@ -1,6 +1,6 @@
 import React from "react"
 import "./RadioGroup.scss"
-const RadioGroup = ({ value, onChange, items }) => {
+const RadioGroup = ({ value, onChange, items, disabled }) => {
   return (
     <div>
       {items.map((item, index) => (
@@ -8,6 +8,7 @@ const RadioGroup = ({ value, onChange, items }) => {
           <input
             type="radio"
             name="radio"
+            disabled={disabled}
             value={item.value}
             id={item.value}
             checked={value?.value === item.value}

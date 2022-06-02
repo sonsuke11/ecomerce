@@ -3,7 +3,7 @@ import { all, takeLatest, call, put } from "redux-saga/effects"
 import categoryApi from "../../services/Category/api"
 import { setDataCategory } from "./actions"
 
-function* getaAllCategory(action) {
+function* getAllCategory(action) {
   const { params, onSuccess, onError } = action.payload
   try {
     const res = yield call(categoryApi.getListCategory, params)
@@ -67,7 +67,7 @@ function* addCategory(action) {
 }
 export default function* settingSaga() {
   yield all([
-    takeLatest(actions.GET_ALL_CATEGORY, getaAllCategory),
+    takeLatest(actions.GET_ALL_CATEGORY, getAllCategory),
     takeLatest(actions.DELETE_CATEGORY, deleteCategory),
     takeLatest(actions.GET_DETAIL_CATEGORY, getDetailCategory),
     takeLatest(actions.EDIT_CATEGORY, editCategory),

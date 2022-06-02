@@ -8,13 +8,27 @@ import "./Detail.scss"
 import { ToastContext } from "../../App"
 import { getMessageError } from "../../utils/helpers"
 import DescriptionProduct from "../../components/modlecules/DetailProduct/DescriptionProduct"
+import useComment from "../../hooks/useComment"
+import ProductComment from "../../components/modlecules/DetailProduct/ProductComment"
+import _ from "lodash"
 
 const Detail = () => {
   const [searchParams] = useSearchParams()
   const { viewProductById } = useProduct()
   const [productDetail, setProductDetail] = useState({})
-  const { addToCart, viewCartByUser } = useCart()
+  const { cartData, viewCartByUser, setCartDataToStore } = useCart()
   const { toast } = useContext(ToastContext)
+  const { getComment } = useComment()
+  const [commentData, setCommentData] = useState()
+  const fetchComment = () => {
+    getComment(
+      { product: searchParams.get("id"), rootComment: true },
+      (res) => {
+        setCommentData(res?.data)
+      },
+      () => {}
+    )
+  }
 
   useEffect(() => {
     viewProductById(
@@ -26,6 +40,7 @@ const Detail = () => {
         // do nothing
       }
     )
+    fetchComment()
   }, [])
   const refreshCartData = () => {
     viewCartByUser(
@@ -36,14 +51,27 @@ const Detail = () => {
     )
   }
   const handleAddToCart = (product) => {
-    addToCart(
-      product,
+    const isExist = cartData.some((item) => item._id === product._id)
+
+    let params = cartData
+    if (isExist) {
+      params = params.map((item) => {
+        if (item._id === product._id) {
+          return { ...item, qty: item.qty + product.qty }
+        }
+        return item
+      })
+    } else {
+      params = [...params, { ...product }]
+    }
+
+    setCartDataToStore(
+      params,
       () => {
-        refreshCartData()
-        toast("success", "Thêm vào giỏ hàng thành công")
+        // do nothing
       },
-      (error) => {
-        toast("error", getMessageError(error))
+      () => {
+        // do nothing
       }
     )
   }
@@ -59,8 +87,17 @@ const Detail = () => {
             onAddToCartClick={handleAddToCart}
           />
         </div>
-        <div className="row detail__wrapper" style={{ marginTop: "1.5rem" }}>
+        <br />
+        <div className="row detail__wrapper">
           <DescriptionProduct product={productDetail} />
+        </div>
+        <br />
+        <div className="row detail__wrapper">
+          <ProductComment
+            id={searchParams.get("id")}
+            data={commentData}
+            fetchComment={fetchComment}
+          />
         </div>
       </div>
     </Layout>

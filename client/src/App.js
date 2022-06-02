@@ -22,6 +22,7 @@ import OrderList from "./pages/Admin/Order/OrderList"
 import MyAccount from "./pages/MyAccount/MyAccount"
 import MyOrder from "./pages/MyOrder/MyOrder"
 import OrderDetail from "./pages/OrderDetail/OrderDetail"
+import EvaluateProduct from "./pages/EvaluateProduct/EvaluateProduct"
 
 export const ToastContext = createContext()
 const App = () => {
@@ -35,27 +36,14 @@ const App = () => {
         }}
       >
         <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Products />} />
+          <Route path="/detail" element={<Detail />} />
           <Route
-            path="/"
+            path="/evaluate-product"
             element={
               <PrivateRouter>
-                <Home />
-              </PrivateRouter>
-            }
-          />
-          <Route
-            path="/search"
-            element={
-              <PrivateRouter>
-                <Products />
-              </PrivateRouter>
-            }
-          />
-          <Route
-            path="/detail"
-            element={
-              <PrivateRouter>
-                <Detail />
+                <EvaluateProduct />
               </PrivateRouter>
             }
           />

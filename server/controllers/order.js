@@ -83,7 +83,6 @@ const OrderController = {
         data: orderUpdated,
       })
     } catch (error) {
-      console.log("error", error)
       next(error)
     }
   },
@@ -97,10 +96,10 @@ const OrderController = {
     }
 
     if (startDate) {
-      query.paymentDate = { $gt: startDate }
+      query.paymentDate = { ...query.paymentDate, $gt: startDate }
     }
     if (endDate) {
-      query.paymentDate = { $lt: endDate }
+      query.paymentDate = { ...query.paymentDate, $lt: endDate }
     }
 
     try {
@@ -129,7 +128,9 @@ const OrderController = {
       }
 
       const totalPage = Math.ceil(orders.length / pageSize)
+
       const totalElement = orders?.length
+
       res.status(200).json({
         success: true,
         data: {
@@ -147,7 +148,59 @@ const OrderController = {
       next(error)
     }
   },
+  searchAllOrder: async (req, res, next) => {
+    const { searchByUser, startDate, endDate, ...params } = req.body
+    const { _id } = req.user
+    let query = { ...params }
 
+    if (searchByUser) {
+      query.userId = _id
+    }
+
+    if (startDate) {
+      const dateArr = startDate.split("-").map((item) => Number(item))
+
+      query.paymentDate = {
+        ...query.paymentDate,
+        $gte: new Date(dateArr[0], dateArr[1] - 1, dateArr[2] + 1),
+      }
+    }
+    if (endDate) {
+      const dateArr = endDate.split("-").map((item) => Number(item))
+
+      query.paymentDate = {
+        ...query.paymentDate,
+        $lte: new Date(dateArr[0], dateArr[1] - 1, dateArr[2] + 1),
+      }
+    }
+    console.log("query", query)
+    try {
+      let sort = { createdAt: -1 }
+
+      const orders = await Order.find(query)
+        .populate({
+          path: "products",
+          populate: {
+            path: "productId",
+            populate: { path: "images" },
+          },
+        })
+        .populate({ path: "userId", select: "username" })
+        .sort(sort)
+
+      const totalElement = orders?.length
+
+      res.status(200).json({
+        success: true,
+        data: {
+          list: orders,
+          totalElement,
+        },
+      })
+    } catch (error) {
+      next(error)
+    }
+  },
   getAllCity: async (req, res, next) => {
     try {
       request(
@@ -183,8 +236,14 @@ const OrderController = {
   },
   getDataOrderForChart: async (req, res, next) => {
     const params = req.body
+
     let query = [
-      { $match: { status: 4 } },
+      {
+        $match: {
+          status: 4,
+          // paymentDate: { $gt: moment().subtract(30, "days") },
+        },
+      },
       {
         $lookup: {
           from: "orderitems",

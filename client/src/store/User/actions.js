@@ -3,6 +3,9 @@ import * as types from "../types"
 export const login = (params) => {
   return { type: types.LOGIN, payload: params }
 }
+export const logout = (params) => {
+  return { type: types.LOGOUT, payload: params }
+}
 export const getUserInfo = (params) => {
   return { type: types.GET_USER_INFO, payload: params }
 }
@@ -32,4 +35,7 @@ export const resetPassword = (params) => {
 }
 export const updateUser = (params) => {
   return { type: types.UPDATE_USER, payload: params }
+}
+export const updateInfo = (params) => {
+  return { type: types.UPDATE_INFO, payload: params }
 }

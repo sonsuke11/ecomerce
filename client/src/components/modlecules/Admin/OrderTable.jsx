@@ -2,7 +2,13 @@ import React, { useContext, useState } from "react"
 import moment from "moment"
 import Paginate from "../../atoms/Paginate/Paginate"
 import "./ProductTable.scss"
-import { Approved, Cancel, Transport, Waitting } from "../../../utils/constants"
+import {
+  Approved,
+  Cancel,
+  Completed,
+  Transport,
+  Waitting,
+} from "../../../utils/constants"
 import { formatCurrent } from "../../../utils/helpers"
 import styled from "styled-components"
 import images from "../../../themes/image"
@@ -10,7 +16,13 @@ import ChangeStatusOrderModal from "./ChangeStatusOrderModal"
 import useOrder from "../../../hooks/useOrder"
 import { ToastContext } from "../../../App"
 moment.locale("vi")
-const OrderTable = ({ data, handleDelete, handleEdit, onChangePage }) => {
+const OrderTable = ({
+  data,
+  handleDelete,
+  handleEdit,
+  onChangePage,
+  fetchOrder,
+}) => {
   const { toast } = useContext(ToastContext)
   const [selected, setSelected] = useState({})
   const { updateOrder } = useOrder()
@@ -58,6 +70,7 @@ const OrderTable = ({ data, handleDelete, handleEdit, onChangePage }) => {
       () => {
         toast("success", "Cập nhật đơn hàng thành công")
         handleCloseModal()
+        fetchOrder()
       },
       () => {
         // do nothing
@@ -106,15 +119,17 @@ const OrderTable = ({ data, handleDelete, handleEdit, onChangePage }) => {
                 <td style={{ verticalAlign: "middle" }}>
                   <div style={{ display: "flex", alignItems: "center" }}>
                     {mapStatus(item.status)}
-                    <img
-                      src={images.icEdit}
-                      alt=""
-                      onClick={() => {
-                        setSelected(item)
-                        handleShowModal()
-                      }}
-                      style={{ width: "2rem", marginLeft: "0.9rem" }}
-                    />
+                    {item.status !== Completed && (
+                      <img
+                        src={images.icEdit}
+                        alt=""
+                        onClick={() => {
+                          setSelected(item)
+                          handleShowModal()
+                        }}
+                        style={{ width: "2rem", marginLeft: "0.9rem" }}
+                      />
+                    )}
                   </div>
                 </td>
                 <td style={{ verticalAlign: "middle" }}>
@@ -163,6 +178,7 @@ const OrderTable = ({ data, handleDelete, handleEdit, onChangePage }) => {
         data={selected}
         onSave={handleSave}
         setData={setSelected}
+        onCancel={handleCloseModal}
       />
     </>
   )
@@ -193,4 +209,5 @@ const StatusSpan = styled.p`
   padding: 1rem;
   border-radius: 2rem;
   color: white;
+  min-width: 11rem;
 `

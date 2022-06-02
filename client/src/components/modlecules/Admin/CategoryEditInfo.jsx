@@ -12,7 +12,7 @@ const CategoryEditInfo = ({
 }) => {
   return (
     <div className="category__info">
-      <h3>Category Edit</h3>
+      <h3>Thông tin danh mục</h3>
       <div className="row ">
         <div className="col c-6 category__input">
           <Input

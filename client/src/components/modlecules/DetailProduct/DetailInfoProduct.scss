@@ -45,6 +45,11 @@
             display: flex;
             margin-inline:2rem;
             border-radius:2rem;
+            position: relative;
+            & p{
+                position: absolute;
+                top:0;
+            }
             & span{
                 padding-inline:1rem ;
                 cursor: pointer;
@@ -54,7 +59,7 @@
                 border:none;
                 background-color: transparent;
                 margin-inline: 1rem;
-                width: 1.8rem;
+                width: 2.2rem;
             }
         }
     }

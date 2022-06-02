@@ -13,6 +13,7 @@ const authorize = async (req, res, next) => {
     req.user = user
     next()
   } catch (error) {
+    console.log("error", error)
     next(error)
   }
 }

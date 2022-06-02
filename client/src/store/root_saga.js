@@ -5,6 +5,7 @@ import cartSaga from "./Cart/sagas"
 import categorySaga from "./Category/sagas"
 import placeSearchSaga from "./PlaceSeach/sagas"
 import orderSaga from "./Order/sagas"
+import commentSaga from "./Comment/sagas"
 
 export default function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
     categorySaga(),
     placeSearchSaga(),
     orderSaga(),
+    commentSaga(),
   ])
 }

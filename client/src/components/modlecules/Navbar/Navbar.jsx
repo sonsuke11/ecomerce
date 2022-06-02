@@ -1,36 +1,50 @@
-import React from "react"
-
+import React, { useEffect, useState } from "react"
+import { NavLink, useLocation } from "react-router-dom"
+import styled from "styled-components"
+import useCategory from "../../../hooks/useCategory"
 import "./Navbar.scss"
 
 const Navbar = () => {
-  const navItems = [
-    {
-      label: "nam",
-    },
-    {
-      label: "nữ",
-      class: 0,
-    },
-    {
-      label: "new",
-      class: 0,
-    },
-    {
-      label: "sale",
-      class: 0,
-    },
-    {
-      label: "bán chạy",
-      class: 0,
-    },
-  ]
+  const { getAllCategory } = useCategory()
+  const [navItems, setNavItems] = useState()
+  const location = useLocation()
+
+  const getPath = () => {
+    return location.pathname + location.search
+  }
+
+  const fetchCategory = () => {
+    getAllCategory(
+      {},
+      (res) => {
+        const categories = res?.list?.map((category) => ({
+          label: category?.name,
+          path: `/search?type=${category._id}`,
+        }))
+        setNavItems([{ label: "Trang chủ", path: "/" }, ...categories])
+      },
+      () => {}
+    )
+  }
+
+  useEffect(() => {
+    fetchCategory()
+  }, [])
+
   return (
     <div className="navbar__fluid">
       <div className="navbar__containter">
-        {navItems.map((item, index) => (
-          <div className="navbar__item" key={index}>
+        {navItems?.map((item, index) => (
+          <StyledNavLink
+            to={item.path}
+            key={index}
+            className={[
+              "navbar__item",
+              getPath() === item.path ? "actived" : "",
+            ].join(" ")}
+          >
             {item.label}
-          </div>
+          </StyledNavLink>
         ))}
       </div>
     </div>
@@ -38,3 +52,16 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+const StyledNavLink = styled(NavLink)`
+  display: block;
+  color: white;
+  &.actived {
+    &:after {
+      content: "";
+      display: block;
+      width: 100%;
+      border-bottom: 2px solid white;
+    }
+  }
+`

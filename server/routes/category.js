@@ -21,7 +21,7 @@ router
   .post(admin, createCategory)
   .put(admin, updateCategory)
   .delete(admin, deleteCategory)
-router.route("/search").post(authorize, getAllCategories)
+router.route("/search").post(getAllCategories)
 router.route("/:id").get(admin, detailCategory)
 
 router

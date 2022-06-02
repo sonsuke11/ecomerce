@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import images from "../../../themes/image"
 import "./NavItem.scss"
 
-const NavItem = ({ title, children, icon, path }) => {
+const NavItem = ({ title, children, icon, path, avatar }) => {
   const [expand, setExpand] = useState(false)
   const ref = useRef(null)
   const [childHeight, setChildHeight] = useState(ref?.current?.clientHeight)
@@ -15,7 +15,14 @@ const NavItem = ({ title, children, icon, path }) => {
   return (
     <div className="nav__menu--wrap">
       <div className="nav__menu" onClick={() => setExpand(!expand)}>
-        <img src={icon} alt="icon" className="nav__menu--icon" />
+        {icon && <img src={icon} alt="icon" className="nav__menu--icon" />}
+        {avatar && (
+          <img
+            src={`data:image/png;base64,${avatar}`}
+            alt="icon"
+            className="nav__menu--avatar"
+          />
+        )}
         {children && <div className="nav__menu--content">{title}</div>}
         {!children && (
           <Link className="nav__menu--content" to={path}>
@@ -26,7 +33,7 @@ const NavItem = ({ title, children, icon, path }) => {
           <img
             src={images.icCarretDown}
             alt=""
-            className={["nav__expand--icon", !expand ? "hide" : "show"].join(
+            className={["nav__expand--icon", expand ? "hide" : "show"].join(
               " "
             )}
           />

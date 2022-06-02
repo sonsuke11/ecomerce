@@ -45,6 +45,7 @@ const Wrap = styled.div`
   display: flex;
   border-radius: 5px;
   background-color: white;
+  box-shadow: 4px 4px 10px #ccc;
 `
 
 const StyledLink = styled(Link)`

@@ -6,17 +6,17 @@ import images from "../../themes/image"
 import useUser from "../../hooks/useUser"
 import { ToastContext } from "../../App"
 import { getMessageError } from "../../utils/helpers"
-import { ADMIN } from "../../utils/constants"
 
 const Login = () => {
   const [isHidden, setIsHidden] = useState(false)
   const [isHiddenConfirm, setIsHiddenConfirm] = useState(false)
-
+  const [validateError, setValidateError] = useState()
   const { toast } = useContext(ToastContext)
   const history = useNavigate()
   const [user, setUser] = useState({
     email: "",
     password: "",
+    username: "",
   })
   const { register } = useUser()
   const handleClickIcon = () => {
@@ -25,37 +25,85 @@ const Login = () => {
   const handleLickConfirm = () => {
     setIsHiddenConfirm(!isHiddenConfirm)
   }
+  const validate = () => {
+    const errors = {}
+    let flag = true
+
+    if (!user.username.trim()) {
+      errors.username = "Vui lòng không để trống trường này"
+      flag = false
+    }
+    if (!user.email.trim()) {
+      errors.email = "Vui lòng không để trống trường này"
+      flag = false
+    }
+    if (
+      user.email.trim() &&
+      !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(user.email.trim())
+    ) {
+      errors.email = "Vui lòng nhập email hợp lệ."
+      flag = false
+    }
+    if (!user.password.trim()) {
+      errors.password = "Vui lòng không để trống trường này."
+      flag = false
+    }
+
+    if (
+      user.password.trim() &&
+      user.password.trim() !== user?.confirmPassword?.trim()
+    ) {
+      errors.confirmPassword = "Trường này phải trùng với mật khẩu."
+      flag = false
+    }
+
+    if (!user?.confirmPassword?.trim()) {
+      errors.confirmPassword = "Vui lòng không để trống trường này"
+      flag = false
+    }
+
+    setValidateError(errors)
+
+    console.log("errors", errors)
+    return flag
+  }
   const handleRegisterClick = () => {
-    register(
-      user,
-      () => {
-        toast("success", "Đăng ký thành công")
-        history("/login")
-      },
-      (error) => {
-        toast("error", getMessageError(error))
-      }
-    )
+    if (validate()) {
+      register(
+        user,
+        () => {
+          toast("success", "Đăng ký thành công")
+          history("/login")
+        },
+        (error) => {
+          toast("error", getMessageError(error))
+        }
+      )
+    }
   }
   return (
     <div className="login__modal">
       <br />
-      <div className="login__title">REGISTER</div>
+      <div className="login__title">Đăng ký</div>
       <br />
       <br />
       <Input
         type="text"
         value={user.username}
         onChange={(value) => setUser({ ...user, username: value })}
-        placeholder="Username"
+        placeholder="Tên đăng nhập"
+        error={validateError?.username}
       />
+      <br />
       <br />
       <Input
         type="text"
         value={user.email}
         onChange={(value) => setUser({ ...user, email: value })}
         placeholder="Email"
+        error={validateError?.email}
       />
+      <br />
       <br />
       <Input
         value={user.password}
@@ -63,8 +111,10 @@ const Login = () => {
         type={isHidden ? "text" : "password"}
         icon={isHidden ? images.icView : images.icHidden}
         onClickIcon={handleClickIcon}
-        placeholder="Password"
+        placeholder="Mật khẩu"
+        error={validateError?.password}
       />
+      <br />
       <br />
       <Input
         value={user.confirmPassword}
@@ -72,18 +122,20 @@ const Login = () => {
         type={isHiddenConfirm ? "text" : "password"}
         icon={isHiddenConfirm ? images.icView : images.icHidden}
         onClickIcon={handleLickConfirm}
-        placeholder="Confirm Password"
+        placeholder="Nhập lại mật khẩu"
+        error={validateError?.confirmPassword}
       />
       <br />
       <br />
+      <br />
       <Button className="login__button" onClick={handleRegisterClick}>
-        Register
+        Đăng ký
       </Button>
       <br />
-      <Link to="/forgot-password">Forgot Password ?</Link>
+      <Link to="/forgot-password">Quên mật khẩu ?</Link>
       <br />
       <div className="login__create">
-        You have an account ?<Link to="/login">&nbsp;Login</Link>
+        Bạn đã có tài khoản ?<Link to="/login">&nbsp;Đăng nhập.</Link>
       </div>
     </div>
   )

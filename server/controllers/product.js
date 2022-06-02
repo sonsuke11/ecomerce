@@ -45,7 +45,7 @@ exports.createProduct = async function (req, res, next) {
   const { files } = req
   try {
     if (!files || _.isEmpty(files)) {
-      return next(new ErrorResponse(401, "Must provide images"))
+      return next(new ErrorResponse(401, "Hãy cung cấp hình ảnh"))
     }
     const filesWithEncode = files.map((file) => {
       const img = fs.readFileSync(file.path)
@@ -82,32 +82,43 @@ exports.viewProductById = async function (req, res, next) {
 
 exports.updateProduct = async (req, res, next) => {
   const product = req.body
-  let newProduct = { ...product }
+  let newProduct = { ..._.omit(product, ["_id"]) }
+
   try {
     if (product.images) {
       const files = JSON.parse(product.images)
+
       const filesWithEncode = files.map((file) => {
         if (file?.lastModified) {
           const img = fs.readFileSync(file.path)
           const encodeImg = img.toString("base64")
+
           return {
             fileName: file.filename,
             file: encodeImg,
           }
         }
+
         return file
       })
+
       newProduct = { ...newProduct, images: filesWithEncode }
     }
+
+    if (newProduct?.rootPrice && newProduct?.instock) {
+      newProduct.totalRootPrice = newProduct.rootPrice * newProduct.instock
+    }
+
     const productFinedFromDB = await Product.findById(product._id)
+
     if (!productFinedFromDB) {
       return next(new ErrorResponse(404, "Product not found"))
     }
+
     const updatedProduct = await Product.findByIdAndUpdate(
       product._id,
       {
         ...newProduct,
-        totalRootPrice: newProduct.rootPrice * newProduct.instock,
         updateAt: Date.now(),
       },
       {
@@ -115,6 +126,7 @@ exports.updateProduct = async (req, res, next) => {
       },
       checkIdExist
     ).clone()
+
     res.status(200).json({ success: true, data: updatedProduct })
   } catch (error) {
     console.log("error", error)
@@ -149,33 +161,120 @@ exports.getTopSellProduct = async (req, res, next) => {
       $unwind: "$products",
     },
     {
-      $group: {
-        _id: "$products.productId",
-        quantity: { $sum: "$products.quantity" },
-        reverse: { $sum: "$totalPrice" },
-      },
-    },
-    {
-      $sort: {
-        quantity: -1,
-        resverse: 1,
+      $project: {
+        quantity: "$products.quantity",
+        products: "$products",
       },
     },
     {
       $lookup: {
         from: "products",
-        as: "product",
+        as: "products",
+        localField: "products.productId",
+        foreignField: "_id",
+      },
+    },
+    {
+      $unwind: "$products",
+    },
+    {
+      $project: {
+        price: { $multiply: ["$products.price", "$quantity"] },
+        product: "$products",
+        quantity: 1,
+      },
+    },
+    {
+      $group: {
+        _id: "$product._id",
+        price: { $sum: "$price" },
+        quantity: { $sum: "$quantity" },
+      },
+    },
+    {
+      $lookup: {
+        from: "products",
+        as: "products",
         localField: "_id",
         foreignField: "_id",
       },
     },
-    { $unwind: "$product" },
+    {
+      $unwind: "$products",
+    },
+    {
+      $lookup: {
+        from: "images",
+        as: "products.images",
+        localField: "products.images",
+        foreignField: "_id",
+      },
+    },
+    {
+      $sort: {
+        quantity: -1,
+      },
+    },
   ]
 
   try {
     const topOrderList = await Order.aggregate(query)
-    res.status(200).json({ success: true, data: topOrderList })
+    res.status(200).json({
+      success: true,
+      data: topOrderList,
+      totalElement: topOrderList.length,
+    })
   } catch (error) {
+    next(error)
+  }
+}
+exports.getProductBoughtByUser = async (req, res, next) => {
+  const user = req.user
+  try {
+    const products = await Order.aggregate([
+      {
+        $lookup: {
+          from: "orderitems",
+          as: "products",
+          localField: "products",
+          foreignField: "_id",
+        },
+      },
+      {
+        $match: {
+          status: 4,
+          userId: user._id,
+        },
+      },
+      { $unwind: "$products" },
+      {
+        $lookup: {
+          from: "products",
+          as: "products.productId",
+          localField: "products.productId",
+          foreignField: "_id",
+        },
+      },
+      { $unwind: "$products.productId" },
+      {
+        $lookup: {
+          from: "images",
+          as: "products.productId.images",
+          localField: "products.productId.images",
+          foreignField: "_id",
+        },
+      },
+      {
+        $group: {
+          _id: "$userId",
+          products: { $push: "$products" },
+        },
+      },
+    ])
+
+    res.status(200).json({ data: products })
+  } catch (error) {
+    console.log(error)
     next(error)
   }
 }

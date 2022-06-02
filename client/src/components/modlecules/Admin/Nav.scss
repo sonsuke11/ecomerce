@@ -1,15 +1,19 @@
 @import '../../../sass/variables';
 
 .nav__wrapper{
+    position:fixed;
     & a{
         color:#000;
     }
     & .nav__logo{
-        background-color: $gray;
         & img{
             width: 15rem;
             margin: 0 auto;
         }
+        border-bottom: 1px solid #ccc;
+    }
+    & .nav__user{
+        border-top: 1px solid #ccc;
     }
     
 }

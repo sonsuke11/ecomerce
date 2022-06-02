@@ -17,12 +17,22 @@ const useProduct = () => {
   const updateProduct = (params, onSuccess, onError) => {
     return dispatch(actions.updateProduct({ params, onSuccess, onError }))
   }
+
+  const getProductBought = (params, onSuccess, onError) => {
+    return dispatch(actions.getProductBought({ params, onSuccess, onError }))
+  }
+  const getTopSellProduct = (onSuccess, onError) => {
+    return dispatch(actions.getTopSellProduct({ onSuccess, onError }))
+  }
+
   return {
     searchProduct,
+    getTopSellProduct,
     updateProduct,
     viewProductById,
     createProduct,
     deleteProduct,
+    getProductBought,
   }
 }
 export default useProduct

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import Footer from "../Footer/Footer"
-import _ from "lodash"
 
 import Header from "../Header/Header"
 import Navbar from "../Navbar/Navbar"
@@ -14,16 +13,16 @@ const Layout = ({ children }) => {
   const [showCart, setShowCart] = useState(false)
   const { viewCartByUser } = useCart()
   const navigation = useNavigate()
-  const fetchUserInfo = () => {
-    getUserInfo(
-      () => {
-        // do nothing
-      },
-      () => {
-        navigation("/login")
-      }
-    )
-  }
+  // const fetchUserInfo = () => {
+  //   getUserInfo(
+  //     () => {
+  //       // do nothing
+  //     },
+  //     () => {
+  //       navigation("/login")
+  //     }
+  //   )
+  // }
   const fetchCartByUser = () => {
     viewCartByUser(
       () => {
@@ -35,8 +34,8 @@ const Layout = ({ children }) => {
     )
   }
   useEffect(() => {
-    fetchUserInfo()
-    fetchCartByUser()
+    // fetchUserInfo()
+    // fetchCartByUser()
   }, [])
   const handleCloseCart = () => {
     setShowCart(false)

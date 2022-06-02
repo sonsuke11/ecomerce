@@ -6,6 +6,9 @@ const useOrder = () => {
   const searchOrder = (params, onSuccess, onError) => {
     return dispatch(actions.searchOrder({ params, onSuccess, onError }))
   }
+  const searchAllOrder = (params, onSuccess, onError) => {
+    return dispatch(actions.searchAllOrder({ params, onSuccess, onError }))
+  }
   const updateOrder = (params, onSuccess, onError) => {
     return dispatch(actions.updateOrder({ params, onSuccess, onError }))
   }
@@ -26,6 +29,7 @@ const useOrder = () => {
     createOrder,
     getOrderById,
     getDataOrderEveryDay,
+    searchAllOrder,
   }
 }
 

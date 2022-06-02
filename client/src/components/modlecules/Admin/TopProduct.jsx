@@ -12,10 +12,10 @@ import {
 import { Line } from "react-chartjs-2"
 import useOrder from "../../../hooks/useOrder"
 
-import socketIOClient from "socket.io-client"
-import { BASE_URL } from "../../../utils/constants"
+// import socketIOClient from "socket.io-client"
+// import { BASE_URL } from "../../../utils/constants"
 
-const socket = socketIOClient("http://localhost:5000")
+// const socket = socketIOClient("http://localhost:5000")
 const TopProduct = () => {
   const { getDataOrderEveryDay } = useOrder()
   const [dataChart, setDataChart] = useState()
@@ -79,9 +79,12 @@ const TopProduct = () => {
       },
       () => {}
     )
-    fetch(`${BASE_URL}/activities`).then((data) => {
-      console.log(data)
-    })
+    // socket.on("hello", (data) => {
+    //   console.log(data)
+    // })
+    // socket.on("data", (data) => {
+    //   console.log(data)
+    // })
   }, [])
   return <Line options={options} data={data} />
 }

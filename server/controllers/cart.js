@@ -25,8 +25,6 @@ const cartController = {
         })
         return res.status(201).json({ success: true, data: newCart })
       } else {
-        // res.json(cart)
-
         const productFined = cart.productsOfCart.find((prod) => {
           return String(prod.product._id) === String(product._id)
         })
@@ -43,11 +41,13 @@ const cartController = {
             },
             { new: true }
           )
+
           const newCart = await Cart.findByIdAndUpdate(
             cart._id,
             { updateAt: Date.now() },
             { new: true }
           )
+
           return res.status(200).json({ success: true, data: newCart })
         } else {
           const cartItemCreated = await CartItem.create({
@@ -55,6 +55,7 @@ const cartController = {
             product: product._id,
             _id: new mongoose.Types.ObjectId(),
           })
+
           const cartUpdated = await Cart.findByIdAndUpdate(
             cart._id,
             {
@@ -65,6 +66,7 @@ const cartController = {
             },
             { new: true }
           )
+
           return res.status(200).json({ success: true, data: cartUpdated })
         }
       }
@@ -75,14 +77,15 @@ const cartController = {
   },
   viewCart: async (req, res, next) => {
     const user = req.user
+
     try {
       const cart = await Cart.findOne({ userId: user._id }).populate({
         path: "productsOfCart",
         populate: { path: "product", populate: { path: "images" } },
       })
+
       res.status(200).json({ success: true, data: cart })
     } catch (error) {
-      console.log("error", error)
       next(error)
     }
   },
@@ -101,6 +104,19 @@ const cartController = {
     } catch (error) {
       next(error)
     }
+  },
+  updateCartItem: async (req, res, next) => {
+    const params = req.body
+    try {
+      if (!_.isArray(params)) {
+        return next(new ErrorResponse(400, "Sai định dạng"))
+      }
+      params.forEach(async (item) => {
+        await CartItem.findByIdAndUpdate(item._id, item)
+      })
+
+      res.status(200).json({ message: "Cập nhật giỏ hàng thành công" })
+    } catch (error) {}
   },
 }
 

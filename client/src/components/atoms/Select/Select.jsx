@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import images from "../../../themes/image"
 import "./Select.scss"
 
-const Select = ({ value, onChange, label, options }) => {
+const Select = ({ value, onChange, label, options, error }) => {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const [displayValue, setDisplayValue] = useState(value?.label)
@@ -26,7 +26,10 @@ const Select = ({ value, onChange, label, options }) => {
   return (
     <div className="select__block" ref={ref}>
       {label && <label>{label}</label>}
-      <div className="select__list" onClick={() => setIsOpen(!isOpen)}>
+      <div
+        className={["select__list", error ? "error" : ""].join(" ")}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <input
           value={displayValue}
           onChange={(e) => {
@@ -52,6 +55,7 @@ const Select = ({ value, onChange, label, options }) => {
           </span>
         ))}
       </div>
+      <span className="error__text">{error}</span>
     </div>
   )
 }

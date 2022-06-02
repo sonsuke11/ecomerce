@@ -47,8 +47,8 @@ const ProductList = () => {
   return (
     <AdminLayout>
       <div className="title__block">
-        <h4>Category List</h4>
-        <p>Wellcome to Admin Category List </p>
+        <h4>Danh sách sản phẩm</h4>
+        {/* <p>Wellcome to Admin Category List </p> */}
       </div>
       <br />
       <br />

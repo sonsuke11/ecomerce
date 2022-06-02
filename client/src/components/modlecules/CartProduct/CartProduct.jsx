@@ -13,7 +13,7 @@ const CartProduct = ({ product, onAddToCartClick }) => {
   const [isLike, setIsLike] = useState(false)
   const arrRank = new Array(5)
     .fill(0)
-    .map((i, index) => (index <= product.rank ? 1 : i))
+    .map((i, index) => (index + 1 <= product.rank ? 1 : i))
   const renderRank = () => {
     return arrRank.map((item, index) =>
       item === 0 ? (

@@ -1,12 +1,23 @@
 import React from "react"
 import styled from "styled-components"
 import images from "../../../themes/image"
-import { Cancel, OrderStatusOption, Waitting } from "../../../utils/constants"
+import {
+  Cancel,
+  OrderStatusOption,
+  ShipPrice,
+  Waitting,
+  Completed,
+} from "../../../utils/constants"
 import { formatCurrent } from "../../../utils/helpers"
 import Button from "../../atoms/Button/Button"
 import OrderProductItem from "./OrderProductItem"
 
-const OrderHistoryList = ({ data, onCancelOrder, onDetailOrderClick }) => {
+const OrderHistoryList = ({
+  data,
+  onCancelOrder,
+  onDetailOrderClick,
+  onClickReBuy,
+}) => {
   const mapStatus = (status) => {
     return OrderStatusOption.find((item) => item.value === status)?.label
   }
@@ -18,7 +29,7 @@ const OrderHistoryList = ({ data, onCancelOrder, onDetailOrderClick }) => {
       (prev, curr) => prev + caculatePriceOneProduct(curr),
       0
     )
-    return totalPrice
+    return totalPrice + ShipPrice
   }
 
   const productLength = data?.products?.length
@@ -31,6 +42,7 @@ const OrderHistoryList = ({ data, onCancelOrder, onDetailOrderClick }) => {
         <div
           onClick={() => onDetailOrderClick(data._id)}
           style={{ cursor: "pointer" }}
+          key={data._id}
         >
           <OrderProductItem product={product} onClick={onDetailOrderClick} />
           {index !== productLength && <br />}
@@ -46,7 +58,9 @@ const OrderHistoryList = ({ data, onCancelOrder, onDetailOrderClick }) => {
       </PriceBlock>
       <br />
       <ButtonGroup>
-        {data.status === Cancel && <Button>Mua lại</Button>}
+        {(data.status === Cancel || data.status === Completed) && (
+          <Button onClick={() => onClickReBuy(data._id)}>Mua lại</Button>
+        )}
         {data.status === Waitting && (
           <Button variant="outline" onClick={() => onCancelOrder(data._id)}>
             Hủy đơn
@@ -64,6 +78,7 @@ const Wrap = styled.div`
   margin-block: 2rem;
   background-color: white;
   padding: 2rem;
+  box-shadow: 4px 4px 10px #ccc;
 `
 
 const ButtonGroup = styled.div`

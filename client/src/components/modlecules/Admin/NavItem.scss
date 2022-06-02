@@ -1,6 +1,9 @@
 .nav__menu--wrap{
     padding-inline: 2rem;
     padding-top: 1.4rem;
+    &:last-child{
+        border-top: 1px solid #ccc;
+    }
 }
 .nav__menu {
     display: flex;
@@ -12,6 +15,12 @@
         height:2.4rem;
         margin-right: 1.2rem;
     }
+       & .nav__menu--avatar{
+        width: 2.4rem;
+        height: 2.4rem;
+        margin-right: 1.2rem;
+        border-radius: 50%;
+       }
     & .nav__menu--content {
         font-weight: bold;
         flex:1;
@@ -27,7 +36,6 @@
 }
 
 .nav__link--list{
-    padding-right: 4rem;
     padding-left: 2.6rem;;
     margin-top: 1rem;
     font-size:1.4rem;

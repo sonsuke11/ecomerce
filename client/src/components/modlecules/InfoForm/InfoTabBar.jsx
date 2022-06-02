@@ -14,13 +14,14 @@ const InfoTabBar = () => {
             backgroundImage: `url(data:image/png;base64,${userData?.auth?.avatar})`,
           }}
         />
-        <UserName>SonSuke</UserName>
+        <UserName>{userData?.auth?.username}</UserName>
       </InfoUser>
       <br />
       <hr />
       <br />
       <TabLink to="/my-account">Tài Khoản</TabLink>
       <TabLink to="/my-order">Đơn hàng</TabLink>
+      <TabLink to="/evaluate-product">Đánh giá sản phẩm</TabLink>
     </>
   )
 }
@@ -36,7 +37,7 @@ const Avatar = styled.div`
   width: 8rem;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border-radius: 50%;
   border: 1px solid #ccc;
 `

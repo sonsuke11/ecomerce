@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
+import styled from "styled-components"
 import useCategory from "../../../hooks/useCategory"
 import images from "../../../themes/image"
-import { formatNumber } from "../../../utils/helpers"
+import { StatusOption } from "../../../utils/constants"
 import Button from "../../atoms/Button/Button"
 import Input from "../../atoms/Input/Input"
+import RadioGroup from "../../atoms/RadioGroup/RadioGroup"
 import Select from "../../atoms/Select/Select"
 import FileElement from "./FileElement"
 
@@ -15,6 +17,7 @@ const ProductCreateForm = ({
   onClickCancel,
   arrayFileElement,
   setArrayFileElement,
+  setError,
 }) => {
   const { getAllCategory } = useCategory()
   const [categoryOption, setCategoryOption] = useState()
@@ -32,10 +35,6 @@ const ProductCreateForm = ({
     )
   }, [])
 
-  console.log(
-    "categoryOption?.find((item) => item.value === data?.categoryId)",
-    categoryOption?.find((item) => item.value === data?.categoryId)
-  )
   return (
     <div className="category__info">
       <h3>Add Product</h3>
@@ -46,8 +45,12 @@ const ProductCreateForm = ({
             required
             error={error?.name}
             value={data?.name}
-            onChange={(value) => setData({ ...data, name: value })}
+            onChange={(value) => {
+              setData({ ...data, name: value })
+              setError({ ...error, name: "" })
+            }}
           />
+          <br />
           <br />
           <Input
             label="Giá bán"
@@ -55,8 +58,12 @@ const ProductCreateForm = ({
             type="number"
             error={error?.price}
             value={data?.price}
-            onChange={(value) => setData({ ...data, price: value })}
+            onChange={(value) => {
+              setData({ ...data, price: value })
+              setError({ ...error, price: "" })
+            }}
           />
+          <br />
           <br />
           <Input
             label="Số lượng"
@@ -64,8 +71,13 @@ const ProductCreateForm = ({
             type="number"
             error={error?.instock}
             value={data?.instock}
-            onChange={(value) => setData({ ...data, instock: value })}
+            onChange={(value) => {
+              setData({ ...data, instock: value })
+              setError({ ...error, instock: "" })
+            }}
           />
+
+          <br />
           <br />
           <Input
             label="Giá nhập"
@@ -73,29 +85,45 @@ const ProductCreateForm = ({
             type="number"
             error={error?.rootPrice}
             value={data?.rootPrice}
-            onChange={(value) => setData({ ...data, rootPrice: value })}
+            onChange={(value) => {
+              setData({ ...data, rootPrice: value })
+              setError({ ...error, rootPrice: "" })
+            }}
           />
           <br />
+          <br />
           <Select
+            label="Danh mục"
             options={categoryOption}
+            error={error?.categoryId}
             value={
               categoryOption?.find((item) => item.value === data?.categoryId) ||
               null
             }
-            onChange={(select) =>
+            onChange={(select) => {
               setData({ ...data, categoryId: select?.value })
-            }
+              setError({ ...error, categoryId: "" })
+            }}
           />
           <br />
-          <Input
-            label="Description"
-            error={error?.description}
-            value={data?.description}
-            onChange={(value) => setData({ ...data, description: value })}
-          />
+          <br />
+          <div className="input__block">
+            <div style={{ marginBottom: "0.8rem" }}>Mô tả sản phẩm</div>
+            <StyledTextArea
+              rows="6"
+              label="Description"
+              value={data?.description}
+              className={[error?.description ? "error" : ""].join(" ")}
+              onChange={(e) => {
+                setData({ ...data, description: e.target.value })
+                setError({ ...error, description: "" })
+              }}
+            />
+            <div className="input__error--text">{error?.description}</div>
+          </div>
         </div>
         <div className="col c-6">
-          <div className="col c-6">
+          <div className="row">
             {arrayFileElement?.map((Item, index) => (
               <>
                 <Item
@@ -125,19 +153,28 @@ const ProductCreateForm = ({
           </div>
           <br />
           <div className="col c-12">
-            <Button
-              icon={images.icPlusWhite}
-              variant="outline-success"
-              onClick={() =>
-                setArrayFileElement([...arrayFileElement, FileElement])
-              }
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              Add an image
-            </Button>
+              <Button
+                icon={images.icPlusWhite}
+                variant="outline-success"
+                onClick={() =>
+                  setArrayFileElement([...arrayFileElement, FileElement])
+                }
+              >
+                Add an image
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
+      <br />
       <br />
       <div style={{ display: "flex" }}>
         <Button variant="success" onClick={onClickSave}>
@@ -155,4 +192,17 @@ const ProductCreateForm = ({
   )
 }
 
-export default ProductCreateForm
+export default memo(ProductCreateForm)
+
+const StyledTextArea = styled.textarea`
+  resize: none;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 6px;
+  display: block;
+  outline: none;
+  border: 1px solid #171717;
+  border-radius: 5px;
+`

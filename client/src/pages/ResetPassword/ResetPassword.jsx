@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/atoms/Button/Button"
 import Input from "../../components/atoms/Input/Input"
 import images from "../../themes/image"
@@ -74,7 +74,7 @@ const ResetPassword = () => {
       <br />
       <br />
       <Input
-        type="text"
+        type={isHidden ? "text" : "password"}
         error={validateError?.password}
         value={user.password}
         onChange={(value) => {
@@ -82,29 +82,33 @@ const ResetPassword = () => {
           setValidateError({ ...validateError, password: "" })
         }}
         placeholder="Mật khẩu mới"
+        icon={isHidden ? images.icView : images.icHidden}
+        onClickIcon={handleClickIcon}
       />
       <br />
+      <br />
       <Input
-        type="text"
+        type={isHiddenConfirm ? "text" : "password"}
         value={user.confirmPassword}
         error={validateError?.confirmPassword}
         onChange={(value) => {
           setUser({ ...user, confirmPassword: value })
           setValidateError({ ...validateError, confirmPassword: "" })
         }}
-        icon={isHidden ? images.icView : images.icHidden}
-        onClickIcon={handleClickIcon}
+        icon={isHiddenConfirm ? images.icView : images.icHidden}
+        onClickIcon={handleLickConfirm}
         placeholder="Nhập lại mật khẩu mới"
       />
+      <br />
       <br />
       <Button className="login__button" onClick={handleResetClick}>
         Xác nhận
       </Button>
       <br />
-      <Link to="/forgot-password">Forgot Password ?</Link>
+      <Link to="/forgot-password">Quên mật khẩu?</Link>
       <br />
       <div className="login__create">
-        You have an account ?<Link to="/login">&nbsp;Login</Link>
+        You have an account?<Link to="/login">&nbsp;Đăng nhập</Link>
       </div>
     </div>
   )

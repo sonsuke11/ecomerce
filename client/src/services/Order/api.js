@@ -4,6 +4,9 @@ const OrderApi = {
   searchOrder: (params) => {
     return api.post("/order/search", params)
   },
+  searchAllOrder: (params) => {
+    return api.post("/order/search-all-order", params)
+  },
   updateOrer: (params) => {
     return api.put("/order", params)
   },

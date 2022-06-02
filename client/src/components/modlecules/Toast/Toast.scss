@@ -1,3 +1,4 @@
+@import '../../../sass/variables';
 .toast__wrap{
     position:fixed;
     top: 0;
@@ -7,13 +8,23 @@
     width:32rem;
     background-color: transparent;
     & .toast__item{
+        border-radius: 5px;
         animation-duration:0.3s;
         animation-name: toast;
         position: relative;
         width: 300px;
         padding: 2rem;
         font-size: 1.3rem;
-        background-color: black;
+        font-weight: bold;
+        &:not(:first-child){
+            margin-top: 5px;
+        }
+        &.success{
+            background-color: $success;
+        }
+        &.danger{
+            background-color: $danger;
+        }
         & .toast__close{
             outline: none;
             background-color: transparent;

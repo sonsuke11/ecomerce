@@ -7,6 +7,7 @@ import {
   REGISTER,
   RESET_PASSWORD,
   SEARCH_USER,
+  UPDATE_INFO,
   UPDATE_USER,
 } from "../types"
 import { setListUser, setUserInfo } from "./actions"
@@ -82,6 +83,19 @@ function* updateUser(action) {
     }
   }
 }
+function* updateInfo(action) {
+  const { params, onSuccess, onError } = action.payload
+  try {
+    const res = yield call(api.updateInfo, params)
+    if (onSuccess) {
+      onSuccess(res?.data)
+    }
+  } catch (error) {
+    if (onError) {
+      onError(error)
+    }
+  }
+}
 function* register(action) {
   const { params, onSuccess, onError } = action.payload
   try {
@@ -128,6 +142,7 @@ export default function* settingSaga() {
     takeLatest(SEARCH_USER, searchUser),
     takeLatest(GET_USER_BY_ID, getUserById),
     takeLatest(UPDATE_USER, updateUser),
+    takeLatest(UPDATE_INFO, updateInfo),
     takeLatest(REGISTER, register),
     takeLatest(RESET_PASSWORD, resetPassword),
     takeLatest(FORGOT_PASSWORD, forgotPassword),

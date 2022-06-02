@@ -1,6 +1,6 @@
 import React from "react"
 import images from "../../../themes/image"
-import { APP_ROLES } from "../../../utils/constants"
+import { APP_ROLES, StatusOption } from "../../../utils/constants"
 import Paginate from "../../atoms/Paginate/Paginate"
 
 const UserTable = ({ listData, handleEdit, onChangePage }) => {
@@ -23,6 +23,7 @@ const UserTable = ({ listData, handleEdit, onChangePage }) => {
             <th>User Name</th>
             <th>Role</th>
             <th>Email</th>
+            <th>Status</th>
             <th>Setting</th>
           </tr>
         </thead>
@@ -33,6 +34,9 @@ const UserTable = ({ listData, handleEdit, onChangePage }) => {
               <td>{item.username}</td>
               <td>{renderRole(item.role)}</td>
               <td>{item.email}</td>
+              <td>
+                {StatusOption.find((i) => item.enable === i.value)?.label}
+              </td>
               <td className="table__icon">
                 <img
                   src={images.icEdit}

@@ -23,7 +23,6 @@ const UserSchema = mongoose.Schema(
       type: String,
     },
     address: String,
-    avartar: String,
     dateOfBirth: String,
     phone: {
       type: String,

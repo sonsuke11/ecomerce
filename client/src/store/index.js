@@ -10,7 +10,7 @@ import persistStore from "redux-persist/es/persistStore"
 const persistConfig = {
   key: "root",
   storage: storage,
-  whitelist: ["userData"],
+  whitelist: ["userData", "cartData"],
 }
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(

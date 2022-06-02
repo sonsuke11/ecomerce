@@ -5,11 +5,6 @@ const CartItem = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
     },
-    status: {
-      type: Number,
-      enum: [0, 1],
-      default: 1,
-    },
     qty: {
       default: 1,
       type: Number,

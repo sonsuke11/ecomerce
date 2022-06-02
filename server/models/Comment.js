@@ -6,23 +6,27 @@ const CommentSchema = mongoose.Schema(
       type: String,
       required: [true, "Must be provide content of comment"],
     },
-    replies: [this],
-    like: {
-      type: Number,
-      default: 0,
-    },
+    replies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Must be provide author"],
     },
-    productId: {
+    vote: Number,
+    rootComment: Boolean,
+    product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
       required: [true, "Must be provide product"],
     },
   },
-  { timestamps: { createdAt: "createdAt", updateAt: "updateAt" } }
+  { timestamps: { createdAt: "createdAt", updateAt: "updatedAt" } }
 )
 
 module.exports = mongoose.model("Comment", CommentSchema)

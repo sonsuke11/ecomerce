@@ -38,9 +38,6 @@
         background-color: $white;
       }
     }
-    &.error {
-      border-color: $danger;
-    }
   }
 
   & .input__error--text {
@@ -48,5 +45,15 @@
     font-size: 1.4rem;
     margin-top: 0.6rem;
     font-weight: normal;
+    position: absolute;
+    top: 100%;
   }
+}
+
+.error {
+  &::placeholder {
+    color: $danger;
+  }
+
+  border-color: $danger !important  ;
 }

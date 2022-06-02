@@ -1,10 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 import useCart from "../../../hooks/useCart"
+import images from "../../../themes/image"
 import { formatCurrent } from "../../../utils/helpers"
 
-const OrderProduct = () => {
+const OrderProduct = ({ dataOrder, id, onClickDelete }) => {
   const { cartData } = useCart()
+
+  const list = id ? dataOrder?.products : cartData
 
   return (
     <div className="col c-12">
@@ -16,21 +19,34 @@ const OrderProduct = () => {
           <Th>Số lượng</Th>
           <Th>Thành tiền</Th>
         </tr>
-        {cartData?.data?.productsOfCart.map((product) => (
+        {list?.map((product, index) => (
           <tr>
             <Td>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <Img
-                  src={`data:image/png;base64,${product.product.images[0].file}`}
+                  src={`data:image/png;base64,${
+                    product?.images?.[0]?.file ||
+                    product?.productId?.images?.[0]?.file
+                  }`}
                   alt="product"
                 />
                 &nbsp;&nbsp;&nbsp;
-                <p>{product.product.name}</p>
+                <p>{product?.name || product?.productId?.name}</p>
               </div>
             </Td>
-            <Td>{formatCurrent(product.product.price)}</Td>
-            <Td>{product.qty}</Td>
-            <Td>{formatCurrent(product.product.price * product.qty)}</Td>
+            <Td>
+              {formatCurrent(product?.price || product?.productId?.price)}
+            </Td>
+            <Td>{product?.qty || product?.quantity}</Td>
+            <Td>
+              {formatCurrent(
+                (product?.price || product?.productId?.price) *
+                  (product?.qty || product?.quantity)
+              )}
+            </Td>
+            {/* <Td>
+              <Icon src={images.icTrash} onClick={() => onClickDelete(index)} />
+            </Td> */}
           </tr>
         ))}
       </table>
@@ -73,4 +89,9 @@ const Th = styled.th`
 const Img = styled.img`
   width: 6rem;
   object-fit: contain;
+  border: 1px solid #ccc;
+`
+
+const Icon = styled.img`
+  width: 2rem;
 `

@@ -2,6 +2,7 @@ import {
   CREATE_ORDER,
   GET_ORDER_BY_ID,
   GET_ORDER_EVERY_DAY,
+  SEARCH_ALL_ORDER,
   SEARCH_ORDER,
   UPDATE_ORDER,
 } from "../types"
@@ -9,6 +10,9 @@ import {
 const actions = {
   searchOrder: (params) => {
     return { type: SEARCH_ORDER, payload: params }
+  },
+  searchAllOrder: (params) => {
+    return { type: SEARCH_ALL_ORDER, payload: params }
   },
 
   updateOrder: (params) => {

@@ -6,13 +6,24 @@ import { formatCurrent } from "../../../utils/helpers"
 import Input from "../../atoms/Input/Input"
 import "./InfoOrderForm.scss"
 
-const InfoOrderForm = ({ dataOrder, setDataOrder, onSave }) => {
+const InfoOrderForm = ({
+  dataOrder,
+  setDataOrder,
+  onSave,
+  id,
+  setValidateError,
+  validateError,
+}) => {
   const { cartData } = useCart()
   const caculateTotalPrice = () => {
     const caculatePriceOneProduct = (product) => {
-      return product?.product?.price * product?.qty
+      return (
+        (product?.price || product?.productId?.price) *
+        (product?.qty || product?.quantity)
+      )
     }
-    const totalPrice = cartData?.data?.productsOfCart?.reduce(
+    const listProduct = id ? dataOrder?.products : cartData
+    const totalPrice = listProduct?.reduce(
       (prev, curr) => prev + caculatePriceOneProduct(curr),
       0
     )
@@ -29,12 +40,15 @@ const InfoOrderForm = ({ dataOrder, setDataOrder, onSave }) => {
           <Input
             placeholder="Họ và Tên"
             value={dataOrder?.name}
+            error={validateError?.name}
             onChange={(value) => setDataOrder({ ...dataOrder, name: value })}
           />
+          <br />
           <br />
           <div className="row sm-gutter">
             <div className="col c-8">
               <Input
+                error={validateError?.email}
                 placeholder="Email"
                 value={dataOrder?.email}
                 onChange={(value) =>
@@ -46,6 +60,7 @@ const InfoOrderForm = ({ dataOrder, setDataOrder, onSave }) => {
               <Input
                 placeholder="Số điện thoại"
                 value={dataOrder?.phone}
+                error={validateError?.phone}
                 onChange={(value) =>
                   setDataOrder({ ...dataOrder, phone: value })
                 }
@@ -53,9 +68,11 @@ const InfoOrderForm = ({ dataOrder, setDataOrder, onSave }) => {
             </div>
           </div>
           <br />
+          <br />
           <Input
             placeholder="Địa chỉ"
             value={dataOrder?.address}
+            error={validateError?.address}
             onChange={(value) => setDataOrder({ ...dataOrder, address: value })}
           />
         </div>
@@ -73,11 +90,11 @@ const InfoOrderForm = ({ dataOrder, setDataOrder, onSave }) => {
           <p>{formatCurrent(totalPrice)}</p>
         </ContentCurrency>
         <ContentCurrency>
-          <p>Tổng tiền hàng</p>
+          <p>Phí ship</p>
           <p>{formatCurrent(ShipPrice)}</p>
         </ContentCurrency>
         <ContentCurrency>
-          <p>Tổng tiền hàng</p>
+          <p>Tổng thanh toán</p>
           <p>{formatCurrent(totalPayment)}</p>
         </ContentCurrency>
       </div>

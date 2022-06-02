@@ -74,3 +74,8 @@ export const OrderStatusOption = [
     value: Completed,
   },
 ]
+
+export const StatusOption = [
+  { label: "Disable", value: 0 },
+  { label: "Enable", value: 1 },
+]

@@ -9,6 +9,7 @@ const {
   deleteUser,
   searchUser,
   getUserById,
+  updateUserAdmin,
 } = require("../controllers/auth")
 const admin = require("../middlewares/admin")
 const authorize = require("../middlewares/auth")
@@ -20,12 +21,12 @@ router.route("/register").post(register)
 router.route("/forgotpassword").post(forgotPassword)
 router.route("/resetpassword/:resetToken").put(resetPassword)
 router.route("/user-info").get(authorize, getUserInfo)
-router.route("/").put(authorize, upload.single("avatar"), updateUser)
+router.route("/update-info").put(authorize, upload.single("avatar"), updateUser)
 
 //admin user
 router
   .route("/")
-  .put(admin, updateUser)
+  .put(admin, updateUserAdmin)
   .delete(admin, deleteUser)
   .post(admin, searchUser)
 router.route("/:id").get(admin, getUserById)

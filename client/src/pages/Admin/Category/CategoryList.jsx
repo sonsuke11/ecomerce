@@ -12,7 +12,7 @@ const CategoryList = () => {
   const { getAllCategory, deleteCategory, editCategory } = useCategory()
   const [modal, setModal] = useState({
     isOpen: false,
-    title: "Category Edit",
+    title: "Chỉnh sửa sản phẩm",
   })
   const handleFetchCategoryData = (params) => {
     getAllCategory(
@@ -62,8 +62,8 @@ const CategoryList = () => {
     <>
       <AdminLayout>
         <div className="title__block">
-          <h4>Category List</h4>
-          <p>Wellcome to Admin Category List </p>
+          <h4>Bảng danh mục</h4>
+          {/* <p>Wellcome to Admin Category List </p> */}
         </div>
         <br />
         <br />
